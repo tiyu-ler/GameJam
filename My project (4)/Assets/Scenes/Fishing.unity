@@ -1397,12 +1397,11 @@ MonoBehaviour:
   isCasted: 0
   baitPrefab: {fileID: 7245493031162422759, guid: 59fa2ca227e9e44419ec3c38047b568f, type: 3}
   rod: {fileID: 1214182164}
-  maxThrowPower: 16
   minThrowDistance: 4
   maxThrowDistance: 16
-  ThrowMultiplier: 10
-  BaitSpawnPosition: {x: 4, y: 6, z: -10}
-  lerpDuration: 1
+  ThrowMultiplier: 100
+  BaitSpawnPosition: {x: 2, y: 6, z: -10}
+  lerpDuration: 0.1
 --- !u!4 &2023219941
 Transform:
   m_ObjectHideFlags: 0
