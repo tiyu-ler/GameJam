@@ -9,11 +9,13 @@ public class TelescopeInteractScript : MonoBehaviour
     public GameObject interactionUI;       // UI element that says "Press Space"
     public Transform player;               // Reference to the player
     public GameObject outlineObject;
+    public bool changedScene;
     private CameraFollow cameraFollowScript; // Reference to the CameraFollow script
     private bool isPlayerInRange = false;    // Flag to check if the player is within the trigger
 
     private void Start()
     {  
+        changedScene = false;
         firstPack.SetActive(true);
         secondPack.SetActive(false);
         interactionUI.SetActive(false);
@@ -26,6 +28,7 @@ public class TelescopeInteractScript : MonoBehaviour
         // Only check for the Space key if the player is within range
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.Space))
         {
+            changedScene = true;
             firstPack.SetActive(false);
             secondPack.SetActive(true);
             outlineObject.SetActive(true);

@@ -7,89 +7,93 @@ public class CameraFollow : MonoBehaviour
     public Transform player;
     public Transform Camera;
     public List<GameObject> stars; 
+    public List<GameObject> Boxes; 
+    public List<Material> finishedStars; 
     public RawImage outline;
-    
+    public GameObject interactionUI;
     public Color defaultColor = Color.white;   // Default color when no star is targeted
-    private Color closeColor = Color.green;
-    private Color midColor = Color.yellow;
-    private Color farColor = Color.red;
+    private Color orangeColor = Color.yellow;
+    private Color greenColor = Color.green;
 
-    private float maxDistance = 0.5f;          // Distance threshold for the green outline
-    private float midDistance = 1.5f;          // Distance threshold for the yellow outline
-    private GameObject currentStar;
-    public float tolerance = 0.1f;             // Tolerance for crosshair positioning
     public Vector3 offset = new Vector3(0, 3.7f, -2.4f);  // Offset position from the player
     public float smoothSpeed = 0.125f;         // Smooth factor for the camera's movement
     public bool IsMoved;
     public float mouseSensitivity = 300f;
+    public float raycastRange = 500f;          // Max distance for raycast to detect stars
+     private TelescopeInteractScript telescopeInteract;
+    private GameObject currentStar;
+    private bool isStarsCloseActive;
 
     private void Start()
     {
+        telescopeInteract = FindObjectOfType<TelescopeInteractScript>();
+        interactionUI.SetActive(false);
+        currentStar = null;
         IsMoved = true;
-        if (outline != null) outline.color = defaultColor;
+        outline.color = defaultColor;
+        isStarsCloseActive = GameObject.FindWithTag("StarsClose") != null && GameObject.FindWithTag("StarsClose").activeInHierarchy;
     }
 
-    private void Update()
+    void Update()
     {
-        currentStar = FindClosestStar();
+        // Update `isStarsCloseActive` status
+        isStarsCloseActive = GameObject.FindWithTag("StarsClose") != null && GameObject.FindWithTag("StarsClose").activeInHierarchy;
+        
+        // Set default color
+        outline.color = defaultColor;
 
-        if (currentStar != null)
+        // Raycast from camera's center towards stars
+        Ray ray = Camera.GetComponent<Camera>().ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, raycastRange))
         {
-            UpdateOutlineAndLight();
-            CheckShoot();
-        }
-        else
-        {
-            outline.color = defaultColor; // Set to default when no star is within tolerance
-        }
-    }
-
-    private GameObject FindClosestStar()
-    {
-        GameObject closestStar = null;
-        float minDistance = float.MaxValue;
-
-        foreach (GameObject star in stars)
-        {
-            Vector3 screenPoint = Camera.GetComponent<Camera>().WorldToScreenPoint(star.transform.position);
-            Vector2 screenCenter = new Vector2(Screen.width / 2, Screen.height / 2);
-            float distance = Vector2.Distance(screenPoint, screenCenter);
-
-            if (distance < minDistance && distance <= midDistance + tolerance)
+            if (hit.collider.CompareTag("StarsClose"))
             {
-                minDistance = distance;
-                closestStar = star;
+                currentStar = hit.collider.gameObject;
+
+                if (isStarsCloseActive)
+                {
+                    outline.color = orangeColor;
+                }
+            }
+            if (hit.collider.CompareTag("Stars"))
+            {
+                interactionUI.SetActive(true);
+                currentStar = hit.collider.gameObject;
+                if (isStarsCloseActive)
+                {
+                    outline.color = greenColor; // Set to orange if within the StarsClose range
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        CheckShoot();
+                    }
+                    
+                }
+            }
+            else
+            {
+                if (telescopeInteract != null && telescopeInteract.changedScene)
+                {
+                    interactionUI.SetActive(false);
+                }
             }
         }
-
-        return closestStar;
-    }
-
-    private void UpdateOutlineAndLight()
-    {
-        Vector3 screenPoint = Camera.GetComponent<Camera>().WorldToScreenPoint(currentStar.transform.position);
-        Vector2 screenCenter = new Vector2(Screen.width / 2, Screen.height / 2);
-        float distance = Vector2.Distance(screenPoint, screenCenter);
-
-        if (distance < maxDistance + tolerance)
-        {
-            outline.color = closeColor;
-        }
-        else if (distance < midDistance + tolerance)
-        {
-            outline.color = midColor;
-        }
         else
         {
-            outline.color = farColor;
+            currentStar = null; // No star detected by the raycast
         }
     }
 
     private void CheckShoot()
     {
-        if (outline.color == closeColor && Input.GetKeyDown(KeyCode.Space))
+        int starID = int.Parse(currentStar.name) - 1;
         {
-            Debug.Log("Shooted Stars");
+            Renderer starRenderer = stars[starID].GetComponent<Renderer>();
+            starRenderer.material = finishedStars[starID];
+            stars[starID].tag = "finished";
+            Boxes[starID].SetActive(false);
+            Boxes[starID+1].SetActive(false);
         }
     }
 

@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Stars
+  - StarsClose
+  - Projectile
+  - finished
   layers:
   - Default
   - TransparentFX
