@@ -5,9 +5,14 @@ TagManager:
   serializedVersion: 2
   tags:
   - Stars
+<<<<<<< HEAD
   - StarsClose
   - Projectile
   - finished
+=======
+  - Projectile
+  - Target
+>>>>>>> parent of 6d5c64d (Revert "ShootingRange v2")
   layers:
   - Default
   - TransparentFX
@@ -15,7 +20,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - FPS_HandheldObject
   - 
   - 
   - 

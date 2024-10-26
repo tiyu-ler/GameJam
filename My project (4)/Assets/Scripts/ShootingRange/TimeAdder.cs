@@ -4,7 +4,7 @@ public class TimeAdder : MonoBehaviour
 {
     public int timeAmount = 10;
     public ParticleSystem ps;
-    /*  private void OnCollisionEnter(Collision collision)
+      private void OnCollisionEnter(Collision collision)
       {
           if (collision.gameObject.CompareTag("Projectile"))
           {
@@ -16,7 +16,7 @@ public class TimeAdder : MonoBehaviour
               Destroy(collision.gameObject);
               Destroy( gameObject);
           }
-      }*//*
+      }/*
       private void OnTriggerEnter(Collider collision){
           if (collision.gameObject.CompareTag("Projectile"))
           {
@@ -29,7 +29,7 @@ public class TimeAdder : MonoBehaviour
               Destroy( gameObject);
           }
       }*/
-    private void OnTriggerExit(Collider collision)
+/*    private void OnTriggerExit(Collider collision)
     {
         if (collision.gameObject.CompareTag("Projectile"))
         {
@@ -41,5 +41,5 @@ public class TimeAdder : MonoBehaviour
             Destroy(collision.gameObject);
             Destroy(gameObject);
         }
-    }
+    }*/
 }

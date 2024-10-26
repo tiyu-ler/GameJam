@@ -5,7 +5,7 @@ public class Target : MonoBehaviour
     public int scoreAmount = 10;
     public bool decreaser = false;
 
-    /*    private void OnCollisionEnter(Collision collision)
+      private void OnCollisionEnter(Collision collision)
         {
             if (collision.gameObject.CompareTag("Projectile"))
             {
@@ -17,7 +17,7 @@ public class Target : MonoBehaviour
                 Destroy(gameObject);
 
             }
-        }*//*
+        }/*
         private void OnTriggerEnter(Collider collision){
             if (collision.gameObject.CompareTag("Projectile"))
             {
@@ -29,7 +29,7 @@ public class Target : MonoBehaviour
                 Destroy(gameObject);
 
             }
-        }*/
+        }*//*
     private void OnTriggerExit(Collider collision)
     {
         if (collision.gameObject.CompareTag("Projectile"))
@@ -42,5 +42,5 @@ public class Target : MonoBehaviour
             Destroy(gameObject);
 
         }
-    }
+    }*/
 }
