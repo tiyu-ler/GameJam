@@ -9,7 +9,6 @@ public class CameraFollow : MonoBehaviour
     public float smoothSpeed = 0.125f; // Smooth factor for the camera's movement
     public bool IsMoved;
     public float mouseSensitivity = 300f;
-    private float verticalRotation = 0f;
     void Start()
     {
         IsMoved = true;
@@ -42,6 +41,5 @@ public class CameraFollow : MonoBehaviour
         float mouseY = Input.GetAxis("Vertical") * mouseSensitivity * Time.deltaTime;
         Camera.transform.Rotate(Vector3.up * mouseX);
         Camera.transform.Rotate(Vector3.left * mouseY);
-        // Camera.localRotation = Quaternion.Euler(Math.Clamp(verticalRotation, -80, 33), 0f, 0f); 
     }
 }
