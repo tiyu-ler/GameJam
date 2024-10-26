@@ -11,13 +11,13 @@ GameObject:
   - component: {fileID: 1874342847752317310}
   - component: {fileID: 1506360314611787300}
   - component: {fileID: 3675622699749212861}
-  - component: {fileID: 4241216290890245794}
   - component: {fileID: 1199750771609742777}
   - component: {fileID: 8019620811845186420}
   - component: {fileID: 4603348202902542387}
   - component: {fileID: 2624427295743529667}
+  - component: {fileID: 6190477614638133854}
   m_Layer: 0
-  m_Name: NegativeSphereTarget
+  m_Name: GoldSphereTarget
   m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,7 +33,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.5, y: 0.7145927, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4f15cfd242821204395211228b37e3b8, type: 2}
+  - {fileID: 2100000, guid: 0dcc44f30db603440ab32a63d702b5f4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -88,27 +88,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &4241216290890245794
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1497260880104667388}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.55
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1199750771609742777
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -148,8 +127,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa8bc76c545244849a75febd24c15125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreAmount: 10
-  decreaser: 1
+  scoreAmount: 100
+  decreaser: 0
+  ps: {fileID: 301105046460040110, guid: 568fcd479ba4db54ea1c31cd08525e1e, type: 3}
 --- !u!114 &4603348202902542387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,3 +165,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83a34eb0e7f32d34b8ed039527833280, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &6190477614638133854
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1497260880104667388}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5765375
+  m_Height: 1.0340033
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}

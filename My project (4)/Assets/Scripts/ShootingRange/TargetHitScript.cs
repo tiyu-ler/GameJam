@@ -4,6 +4,7 @@ public class Target : MonoBehaviour
 {
     public int scoreAmount = 10;
     public bool decreaser = false;
+    public ParticleSystem ps;
 
       private void OnCollisionEnter(Collision collision)
         {
@@ -13,6 +14,7 @@ public class Target : MonoBehaviour
 
                 GameManager.gm.ChangeScoreTime(adjustedScore, 0);
                 Debug.Log("hit");
+                Instantiate(ps, transform.position, Quaternion.Euler(-90,0,0));
                 Destroy(collision.gameObject);
                 Destroy(gameObject);
 
