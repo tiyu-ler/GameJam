@@ -122,6 +122,78 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &143873178
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 143873179}
+  - component: {fileID: 143873181}
+  - component: {fileID: 143873180}
+  m_Layer: 5
+  m_Name: RawImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &143873179
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143873178}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1027725209}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1068, y: 600}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &143873180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143873178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 2800000, guid: 075deac23b172d54ead55ac1a8812b18, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &143873181
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143873178}
+  m_CullTransparentMesh: 1
 --- !u!1 &171337683
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,7 +209,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &171337684
 Transform:
   m_ObjectHideFlags: 0
@@ -201,7 +273,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 5
+  m_Intensity: 0.7
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -723,13 +795,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 486330619}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5359177, y: -0.83656895, z: -0.077476196, w: -0.08331924}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.42261827, y: 0, z: 0, w: 0.9063079}
+  m_LocalPosition: {x: 0, y: 4.77, z: -10.13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -12.646, y: -183.312, z: -64.921}
+  m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
 --- !u!114 &486330623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -744,6 +816,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1727536941}
   Camera: {fileID: 486330622}
+  stars:
+  - {fileID: 816212683}
+  - {fileID: 1418389610}
+  - {fileID: 611138165}
+  - {fileID: 1014496333}
+  outline: {fileID: 143873180}
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  tolerance: 0.3
   offset: {x: 0, y: 3.7, z: -2.4}
   smoothSpeed: 0.125
   IsMoved: 0
@@ -867,6 +947,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4fb4e2d5fe2a3642a50cf91bb4ebf35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetPoint: {x: 0, y: 0, z: 0}
 --- !u!1 &670777121
 GameObject:
   m_ObjectHideFlags: 0
@@ -1024,7 +1105,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &728431681
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1224,7 +1305,7 @@ GameObject:
   - component: {fileID: 816212688}
   m_Layer: 0
   m_Name: Aquarius
-  m_TagString: Untagged
+  m_TagString: Stars
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1328,6 +1409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4fb4e2d5fe2a3642a50cf91bb4ebf35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetPoint: {x: 0, y: 0, z: 0}
 --- !u!1 &888572816
 GameObject:
   m_ObjectHideFlags: 0
@@ -1477,6 +1559,7 @@ MonoBehaviour:
   secondPack: {fileID: 171337683}
   interactionUI: {fileID: 728431680}
   player: {fileID: 1727536941}
+  outlineObject: {fileID: 143873178}
 --- !u!135 &914052474
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1513,7 +1596,7 @@ GameObject:
   - component: {fileID: 1014496338}
   m_Layer: 0
   m_Name: Libra
-  m_TagString: Untagged
+  m_TagString: Stars
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1617,6 +1700,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4fb4e2d5fe2a3642a50cf91bb4ebf35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetPoint: {x: 0, y: 0, z: 0}
 --- !u!1 &1027725205
 GameObject:
   m_ObjectHideFlags: 0
@@ -1712,6 +1796,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 728431681}
+  - {fileID: 143873179}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1841,7 +1926,7 @@ GameObject:
   - component: {fileID: 1418389615}
   m_Layer: 0
   m_Name: Cancer
-  m_TagString: Untagged
+  m_TagString: Stars
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1945,6 +2030,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4fb4e2d5fe2a3642a50cf91bb4ebf35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetPoint: {x: 0, y: 0, z: 0}
 --- !u!1 &1436723476
 GameObject:
   m_ObjectHideFlags: 0
@@ -2207,7 +2293,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1718368052
 Transform:
   m_ObjectHideFlags: 0
@@ -2419,7 +2505,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 5
+  m_Intensity: 0.7
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -2481,7 +2567,7 @@ GameObject:
   - component: {fileID: 1781059633}
   m_Layer: 0
   m_Name: Spot Light
-  m_TagString: Untagged
+  m_TagString: Stars
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2513,7 +2599,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 5
+  m_Intensity: 0.7
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -2607,7 +2693,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 5
+  m_Intensity: 0.7
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
