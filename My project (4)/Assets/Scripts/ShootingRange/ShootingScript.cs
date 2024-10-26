@@ -20,11 +20,11 @@ public class Shooter : MonoBehaviour
 
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, hitLayers))
                 {
-                    Debug.Log("Hit: " + hit.collider.name);
+                   //Debug.Log("Hit: " + hit.collider.name);
 
                     if (hit.collider.gameObject.CompareTag("Target"))
                     {
-                        Destroy(hit.collider.gameObject);
+                        hit.collider.gameObject.GetComponent<Target>().KillTarget();
                     }
                 }
 

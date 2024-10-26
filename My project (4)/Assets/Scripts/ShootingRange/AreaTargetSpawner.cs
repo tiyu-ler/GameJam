@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Spawner : MonoBehaviour
+public class AreaTargetSpawner : MonoBehaviour
 {
     // Spawning intervals and position ranges
     public float secondsBetweenSpawning = 0.1f;
@@ -12,7 +12,7 @@ public class Spawner : MonoBehaviour
     public float zMaxRange = 25.0f;
     public GameObject[] spawnObjects;
 
-    public int maxTargets = 25; // Limit for the number of targets
+    public int maxTargets = 25; 
 
     private float nextSpawnTime;
 

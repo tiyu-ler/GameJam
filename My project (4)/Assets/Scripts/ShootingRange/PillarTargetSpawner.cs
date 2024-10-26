@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class PillarTargetSpawner : MonoBehaviour
 {
-    public float spawnDelay = 2f;
+    public enum Direction { X, Y, Z }
+
+    public float minspawnDelay = 2f;
+    public float maxspawnDelay = 2f;
     public float riseSpeed = 2f;
     public GameObject[] TargetsToSpawn;
-    public int MaxAmountPerType = 5;
     public float[] SpawnChances;
     private Vector3 SpawnPoint;
     public float MaxHeight = 10f;
+    public Direction moveDirection = Direction.Y;
+    public bool invert = false;
+    public float objectScale = 1f;
     float timer = 0f;
     private GameObject ChildTarget;
+    private Coroutine moveCoroutine;
 
     void Start()
     {
@@ -20,7 +26,7 @@ public class PillarTargetSpawner : MonoBehaviour
         {
             Debug.LogError("TargetsToSpawn and SpawnChances have different lengths");
         }
-        SpawnPoint=transform.position;
+        SpawnPoint = transform.position;
         SpawnTarget();
     }
 
@@ -28,7 +34,7 @@ public class PillarTargetSpawner : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if (timer >= spawnDelay)
+        if (timer >= Random.Range(minspawnDelay, maxspawnDelay))
         {
             timer = 0f;
             SpawnTarget();
@@ -40,44 +46,65 @@ public class PillarTargetSpawner : MonoBehaviour
         for (int i = 0; i < TargetsToSpawn.Length; i++)
         {
             GameObject targetPrefab = TargetsToSpawn[i];
-            int currentCount = CountTargetsOfType(targetPrefab.name);
 
-            if (currentCount >= MaxAmountPerType||ChildTarget!=null)
+            if (ChildTarget != null)
                 continue;
 
-            float spawnChance = Random.Range(0f, 1f);
-            if (spawnChance <= SpawnChances[i])
+            if (Random.Range(0f, 1f) <= SpawnChances[i])
             {
                 GameObject newTarget = Instantiate(targetPrefab, SpawnPoint, Quaternion.identity);
-                ChildTarget=newTarget;
-                StartCoroutine(MoveTargetUpwards(newTarget));
-                
+                ChildTarget = newTarget;
+
+                // Apply uniform scale relative to the object's original scale
+                float uniformScale = objectScale;
+                newTarget.transform.localScale = newTarget.transform.localScale * uniformScale;
+
+                if (moveCoroutine != null)
+                {
+                    StopCoroutine(moveCoroutine);
+                }
+                moveCoroutine = StartCoroutine(MoveTarget(newTarget));
+
                 break;
             }
         }
     }
 
-    int CountTargetsOfType(string targetName)
+    IEnumerator MoveTarget(GameObject target)
     {
-        int count = 0;
-        GameObject[] allTargets = GameObject.FindGameObjectsWithTag("Target");
+        Vector3 moveDirectionVector = GetMoveDirectionVector();
+        Vector3 startPosition = target.transform.position;
+        Vector3 targetPosition = startPosition + (moveDirectionVector * MaxHeight);
 
-        foreach (GameObject target in allTargets)
+        while (target != null && !(Vector3.Distance(target.transform.position, targetPosition) < 0.01f))
         {
-            if (target.name.Contains(targetName))
-            {
-                count++;
-            }
-        }
-        return count;
-    }
-
-    IEnumerator MoveTargetUpwards(GameObject target)
-    {
-        while (target.transform.position.y < MaxHeight)
-        {
-            target.transform.position += Vector3.up * riseSpeed * Time.deltaTime;
+            target.transform.position += moveDirectionVector * riseSpeed * Time.deltaTime;
             yield return null;
         }
+    }
+
+    Vector3 GetMoveDirectionVector()
+    {
+        Vector3 directionVector = Vector3.zero;
+
+        switch (moveDirection)
+        {
+            case Direction.X:
+                directionVector = Vector3.right;
+                break;
+            case Direction.Y:
+                directionVector = Vector3.up;
+                break;
+            case Direction.Z:
+                directionVector = Vector3.forward;
+                break;
+        }
+
+        if (invert)
+        {
+            directionVector = -directionVector;
+        }
+
+        return directionVector;
     }
 }

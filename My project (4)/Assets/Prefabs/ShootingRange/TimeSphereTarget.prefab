@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4603348202902542387}
   - component: {fileID: 2624427295743529667}
   - component: {fileID: 6190477614638133854}
-  - component: {fileID: 1555195843431449830}
+  - component: {fileID: 3203993210364709126}
   m_Layer: 0
   m_Name: TimeSphereTarget
   m_TagString: Target
@@ -173,7 +173,7 @@ CapsuleCollider:
   m_Height: 1.0340033
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1555195843431449830
+--- !u!114 &3203993210364709126
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -182,8 +182,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1497260880104667388}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa8b03a331589ba45b174790242ee774, type: 3}
+  m_Script: {fileID: 11500000, guid: aa8bc76c545244849a75febd24c15125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeAmount: 10
+  scoreAmount: 0
+  timeAmount: 5
+  isTimeTarget: 1
+  decreaser: 0
   ps: {fileID: 301105046460040110, guid: 6ac164f56a5a71243b2a07246e3c6f07, type: 3}

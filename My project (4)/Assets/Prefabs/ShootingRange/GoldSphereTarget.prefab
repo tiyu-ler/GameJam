@@ -127,7 +127,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa8bc76c545244849a75febd24c15125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreAmount: 100
+  scoreAmount: 250
+  timeAmount: 10
+  isTimeTarget: 0
   decreaser: 0
   ps: {fileID: 301105046460040110, guid: 568fcd479ba4db54ea1c31cd08525e1e, type: 3}
 --- !u!114 &4603348202902542387

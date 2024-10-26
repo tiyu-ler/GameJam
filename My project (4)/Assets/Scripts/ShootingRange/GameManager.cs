@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     public int score = 0;
     private bool isGameOver = false; 
-    public static GameManager gm = null; // Singleton instance
+    public static GameManager gm = null;
 
     void Awake()
     {
@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
 
         score += sc;
         time += t;
-
+        Debug.Log("Score: "+score);
         scoreText.text = "Score: " + score.ToString();
     }
 
