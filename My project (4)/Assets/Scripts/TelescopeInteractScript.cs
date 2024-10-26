@@ -17,7 +17,6 @@ public class TelescopeInteractScript : MonoBehaviour
     {  
         changedScene = false;
         firstPack.SetActive(true);
-        secondPack.SetActive(false);
         interactionUI.SetActive(false);
         outlineObject.SetActive(false);
         cameraFollowScript = Camera.main.GetComponent<CameraFollow>();
@@ -25,19 +24,13 @@ public class TelescopeInteractScript : MonoBehaviour
 
     private void Update()
     {
-        // Only check for the Space key if the player is within range
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.Space))
         {
             changedScene = true;
             firstPack.SetActive(false);
-            secondPack.SetActive(true);
             outlineObject.SetActive(true);
-            if (cameraFollowScript != null)
-            {
-                cameraFollowScript.IsMoved = false;
-            }
-
-            interactionUI.SetActive(false); // Hide the UI after interaction
+            cameraFollowScript.IsMoved = false;
+            interactionUI.SetActive(false);
         }
     }
 

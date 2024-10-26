@@ -6,10 +6,14 @@ public class CameraFollow : MonoBehaviour
 {
     public Transform player;
     public Transform Camera;
+    private Camera mainCamera;
     public List<GameObject> stars; 
     public List<GameObject> Boxes; 
     public List<Material> finishedStars; 
     public RawImage outline;
+    public float MinFOV;
+    public float MaxFOV;
+    public float ChangeFovWithDistance = 10f;
     public GameObject interactionUI;
     public Color defaultColor = Color.white;   // Default color when no star is targeted
     private Color orangeColor = Color.yellow;
@@ -23,19 +27,22 @@ public class CameraFollow : MonoBehaviour
      private TelescopeInteractScript telescopeInteract;
     private GameObject currentStar;
     private bool isStarsCloseActive;
-
+    private float targetFOV;
     private void Start()
     {
+        mainCamera = Camera.GetComponent<Camera>();
         telescopeInteract = FindObjectOfType<TelescopeInteractScript>();
         interactionUI.SetActive(false);
         currentStar = null;
         IsMoved = true;
         outline.color = defaultColor;
+        targetFOV = MaxFOV;
         isStarsCloseActive = GameObject.FindWithTag("StarsClose") != null && GameObject.FindWithTag("StarsClose").activeInHierarchy;
     }
 
     void Update()
     {
+        AdjustFovWithDistance();
         // Update `isStarsCloseActive` status
         isStarsCloseActive = GameObject.FindWithTag("StarsClose") != null && GameObject.FindWithTag("StarsClose").activeInHierarchy;
         
@@ -43,7 +50,7 @@ public class CameraFollow : MonoBehaviour
         outline.color = defaultColor;
 
         // Raycast from camera's center towards stars
-        Ray ray = Camera.GetComponent<Camera>().ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+        Ray ray = mainCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, raycastRange))
@@ -101,17 +108,20 @@ public class CameraFollow : MonoBehaviour
     {
         if (player != null && IsMoved)
         {
-            Vector3 desiredPosition = player.position + offset;
-            Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
-            transform.position = smoothedPosition;
-            transform.LookAt(player);
+	            transform.LookAt(player.transform);
+                mainCamera.fieldOfView = Mathf.Lerp(mainCamera.fieldOfView, AdjustFovWithDistance(), Time.deltaTime);
         }
         else
         {
             RotateCamera();
         }
     }
-
+    private float AdjustFovWithDistance()
+    {
+        float distance = Vector3.Distance(Camera.position, player.position);
+        targetFOV = Mathf.Clamp(Mathf.Lerp(MinFOV, MaxFOV, distance / ChangeFovWithDistance), MinFOV, MaxFOV);
+        return targetFOV;
+    }
     void RotateCamera()
     {
         Camera.position = new Vector3(0, 0, 0);

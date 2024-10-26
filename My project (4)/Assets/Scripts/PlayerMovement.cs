@@ -4,7 +4,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float rotationSpeed = 10f;
-
+    public Animator animator;
     private Rigidbody rb;
     private Vector3 movement;
 
@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
         movement = new Vector3(moveHorizontal, 0f, moveVertical).normalized;
+        animator.SetFloat("walkSpeed", movement.magnitude * moveSpeed);
         if (movement.magnitude > 0)
         {
             Quaternion targetRotation = Quaternion.LookRotation(movement);
