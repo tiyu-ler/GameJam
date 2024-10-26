@@ -11,9 +11,9 @@ public class CameraFollow : MonoBehaviour
     public List<GameObject> Boxes; 
     public List<Material> finishedStars; 
     public RawImage outline;
-    public float MinFOV;
-    public float MaxFOV;
-    public float ChangeFovWithDistance = 10f;
+    // public float MinFOV;
+    // public float MaxFOV;
+    // public float ChangeFovWithDistance = 10f;
     public GameObject interactionUI;
     public Color defaultColor = Color.white;   // Default color when no star is targeted
     private Color orangeColor = Color.yellow;
@@ -36,13 +36,13 @@ public class CameraFollow : MonoBehaviour
         currentStar = null;
         IsMoved = true;
         outline.color = defaultColor;
-        targetFOV = MaxFOV;
+        // targetFOV = MaxFOV;
         isStarsCloseActive = GameObject.FindWithTag("StarsClose") != null && GameObject.FindWithTag("StarsClose").activeInHierarchy;
     }
 
     void Update()
     {
-        AdjustFovWithDistance();
+        // AdjustFovWithDistance();
         // Update `isStarsCloseActive` status
         isStarsCloseActive = GameObject.FindWithTag("StarsClose") != null && GameObject.FindWithTag("StarsClose").activeInHierarchy;
         
@@ -109,19 +109,20 @@ public class CameraFollow : MonoBehaviour
         if (player != null && IsMoved)
         {
 	            transform.LookAt(player.transform);
-                mainCamera.fieldOfView = Mathf.Lerp(mainCamera.fieldOfView, AdjustFovWithDistance(), Time.deltaTime);
+                // AdjustFovWithDistance();
         }
         else
         {
             RotateCamera();
         }
     }
-    private float AdjustFovWithDistance()
-    {
-        float distance = Vector3.Distance(Camera.position, player.position);
-        targetFOV = Mathf.Clamp(Mathf.Lerp(MinFOV, MaxFOV, distance / ChangeFovWithDistance), MinFOV, MaxFOV);
-        return targetFOV;
-    }
+    // private void AdjustFovWithDistance()
+    // {
+    //     float distance = Vector3.Distance(Camera.position, player.position);
+    //     float clampedDistance = Mathf.Clamp(distance, 10f, 20f);
+    //     float normalizedDistance = ;
+    //     Mathf.Lerp(MinFOV, MaxFOV, Time.deltaTime);
+    // }
     void RotateCamera()
     {
         Camera.position = new Vector3(0, 0, 0);
