@@ -1,27 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Slider : MonoBehaviour
 {
-    public float speed = 5f; 
-    private Vector3 startPosition;
-    public float resetPosition = -4f;
-
-    void Start()
-    {
-        startPosition = transform.position;
-    }
+    public float speed = 5f;           // Speed of movement
+    public float maxZPosition = 270f;  // Maximum position on the Z axis
+    public float minZPosition = -278f; // Minimum position on the Z axis
 
     void Update()
-    { 
-        transform.Translate(Vector3.left * speed * Time.deltaTime, Space.World);
-        if (transform.position.x <= resetPosition)
-        {
-            transform.position = startPosition;
-        }
+    {
+        // Calculate the new Z position using Mathf.PingPong
+        float zPosition = Mathf.PingPong(Time.time * speed, maxZPosition - minZPosition) + minZPosition;
+
+        // Set the object's position, preserving its X and Y positions
+        transform.position = new Vector3(transform.position.x, transform.position.y, zPosition);
     }
-    public void Stop(){
-        speed = 0; 
+
+    // Optional method to stop the movement
+    public void Stop()
+    {
+        speed = 0;
     }
 }

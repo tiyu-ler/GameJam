@@ -3,23 +3,29 @@ using UnityEngine;
 
 public class Fishing : MonoBehaviour
 {
+    public FishingCrosshairScript crosshairScript;
+    public GameObject Crosshair;
     public bool isCasted;
     public GameObject baitPrefab;
     public GameObject rod;
-    private float throwPower;
-    public float minThrowDistance = 4f;
-    public float maxThrowDistance = 20f;
-    public float ThrowMultiplier = 30f;
-    public Vector3 BaitSpawnPosition = new Vector3(4, 6, -10);
-    private Vector3 startRodPosition = new Vector3(1.13f, 1.01f, -4.3f);
-    private Quaternion startRodRotation = Quaternion.Euler(-19.98f, -0.56f, 0);
-    private Vector3 endRodPosition = new Vector3(1.13f, 2.26f, -5.77f);
-    private Quaternion endRodRotation = Quaternion.Euler(-76.102f, -2.192f, 1.936f);
+    // private float throwPower;
+    // public float minThrowDistance = 4f;
+    // public float maxThrowDistance = 20f;
+    // public float ThrowMultiplier = 30f;
+    public Vector3 BaitSpawnPosition = new Vector3(-5.14f, 2.51f, 0.92f);
+    private Vector3 startRodPosition = new Vector3(-7.04f, 0.85f, 0.84f);
+    private Quaternion startRodRotation = Quaternion.Euler(-19.98f, -87.163f, 0);
+    private Vector3 endRodPosition = new Vector3(-5.83f, 1.09f, 0.84f);
+    private Quaternion endRodRotation = Quaternion.Euler(-82.9f, -87.163f, 0f);
     public float lerpDuration = 1.0f;
-    private bool isIncreasingPower = true;
+    // private bool isIncreasingPower = true;
 
     private float time = 0;  
     private bool Toss;  
+    void Start()
+    {
+        crosshairScript = Crosshair.GetComponent <FishingCrosshairScript>();
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && !isCasted)
@@ -35,30 +41,31 @@ public class Fishing : MonoBehaviour
             {
                 Toss = true;
                 StartCoroutine(RaiseRod());
-                isIncreasingPower = true;
-                throwPower = minThrowDistance;
+                // isIncreasingPower = true;
+                // throwPower = minThrowDistance;
+                crosshairScript.LetMove();
             }
-            if (Toss)
-            {
-            if (isIncreasingPower)
-            {
-                throwPower += Time.deltaTime * ThrowMultiplier;
-                if (throwPower >= maxThrowDistance)
-                {
-                    throwPower = maxThrowDistance;
-                    isIncreasingPower = false;
-                }
-            }
-            else
-            {
-                throwPower -= Time.deltaTime * ThrowMultiplier;
-                if (throwPower <= minThrowDistance)
-                {
-                    throwPower = minThrowDistance;
-                    isIncreasingPower = true;
-                }
-            }
-            }
+            // if (Toss)
+            // {
+            // if (isIncreasingPower)
+            // {
+            //     throwPower += Time.deltaTime * ThrowMultiplier;
+            //     if (throwPower >= maxThrowDistance)
+            //     {
+            //         throwPower = maxThrowDistance;
+            //         isIncreasingPower = false;
+            //     }
+            // }
+            // else
+            // {
+            //     throwPower -= Time.deltaTime * ThrowMultiplier;
+            //     if (throwPower <= minThrowDistance)
+            //     {
+            //         throwPower = minThrowDistance;
+            //         isIncreasingPower = true;
+            //     }
+            // }
+            // }
         }
 
         if (Input.GetKeyUp(KeyCode.Space) && !isCasted && Toss)
@@ -101,10 +108,10 @@ public class Fishing : MonoBehaviour
 
     private IEnumerator CastBait()
     {   
+        
         yield return new WaitForEndOfFrame();
-        Debug.Log(throwPower);
-        Vector3 targetPosition = Camera.main.transform.position + Camera.main.transform.forward * throwPower;
-        Debug.Log(targetPosition);
+        // Debug.Log(throwPower);
+        Vector3 targetPosition = crosshairScript.Stop();
         GameObject bait = Instantiate(baitPrefab, BaitSpawnPosition, Quaternion.identity);
         StartCoroutine(MoveBaitToTarget(bait.transform, targetPosition));
         isCasted = true;
@@ -118,13 +125,7 @@ public class Fishing : MonoBehaviour
         while (journey <= 1)
         {
             journey += Time.deltaTime;
-            targetPosition.y = 0.13f;
             baitTransform.position = Vector3.Lerp(startPosition, targetPosition, journey);
-            if (baitTransform.position.y <= 0.13f)
-            {
-                baitTransform.position = new Vector3(baitTransform.position.x, 0.13f, baitTransform.position.z);
-                break;
-            }
             yield return null;
         }
         isCasted = false; // Reset for the next cast
