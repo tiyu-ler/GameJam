@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class SoundManager : MonoBehaviour
 {
     private static SoundManager _instance;
-    public static SoundManager Instance
+    public static SoundManager sndm
     {
         get
         {
@@ -52,7 +52,7 @@ public class SoundManager : MonoBehaviour
             s.source.outputAudioMixerGroup = mixerGroup;
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
-            
+
             soundDictionary[s.name] = s;
         }
     }
@@ -88,18 +88,21 @@ public class SoundManager : MonoBehaviour
     {
         MusicVolume = musVolume;
         UpdateVolumes();
+        Debug.Log("Mus volume updated to: " + musVolume);
     }
 
     public void UpdateAmbientVolume(float ambVolume)
     {
         AmbientVolume = ambVolume;
         UpdateVolumes();
+        Debug.Log("Amb volume updated to: " + ambVolume);
     }
 
     public void UpdateSoundVolume(float sndVolume)
     {
         SoundVolume = sndVolume;
         UpdateVolumes();
+        Debug.Log("Snd volume updated to: " + sndVolume);
     }
 
     private void UpdateVolumes()

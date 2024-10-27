@@ -10,7 +10,8 @@ public class MainMenuScript : MonoBehaviour
     void Start()
     {
         MainMenu.SetActive(true);
-       // public void Play(string sound)
+       SoundManager.sndm.Play("MainTheme");
+
     }
 
     void Update()
