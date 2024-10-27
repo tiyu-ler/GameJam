@@ -13,7 +13,6 @@ public class FishingCrosshairScript : MonoBehaviour
     {
         actualSpeed = 0;
         isMoving = false;
-        
     }
     public void LetMove()
     {

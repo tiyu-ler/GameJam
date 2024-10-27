@@ -8,6 +8,7 @@ TagManager:
   - StarsClose
   - Projectile
   - finished
+  - bait
   layers:
   - Default
   - TransparentFX

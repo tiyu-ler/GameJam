@@ -5,6 +5,7 @@ using UnityEngine;
 public class Fishing : MonoBehaviour
 {
     public FishingCrosshairScript crosshairScript;
+    public CielScript cielScript;
     public GameObject Crosshair;
     private GameObject CrosshairGameObject;
     public GameObject Ciel;
@@ -19,20 +20,27 @@ public class Fishing : MonoBehaviour
     private Vector3 endRodPosition = new Vector3(-5.83f, 1.09f, 0.84f);
     private Quaternion endRodRotation = Quaternion.Euler(-82.9f, -87.163f, 0f);
     public float lerpDuration = 1.0f;
-    
+    public bool CanBeCatched = false;
     private float time = 0;  
     private bool Toss;  
-    // public void NewToss()
-    // {
-    //     Instantiate(Ciel, new Vector3(UnityEngine.Random.Range(-12.0f, -22.0f),0,0), Quaternion.identity);
-    // }
-    // void Start()
-    // {
-    //     NewToss();
-    // }
+    public void NewToss()
+    {
+        Instantiate(Ciel, new Vector3(UnityEngine.Random.Range(-12.0f, -20.0f),0,0), Quaternion.identity);
+    }
+    void Start()
+    {
+        CanBeCatched = false;
+        cielScript = FindObjectOfType<CielScript>();
+        NewToss();
+    }
+    public void StopFishing()
+    {
+        Destroy(rod);
+        Destroy();
+    }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isCasted)
+        if (Input.GetKeyDown(KeyCode.Space) && !isCasted && !CanBeCatched)
         {
             time = 0;
             Toss = false;
@@ -48,7 +56,7 @@ public class Fishing : MonoBehaviour
             crosshairScript = CrosshairGameObject.GetComponent <FishingCrosshairScript>();
         }
 
-        if (Input.GetKey(KeyCode.Space) && !isCasted)
+        if (Input.GetKey(KeyCode.Space) && !isCasted && !CanBeCatched)
         {
             time += Time.deltaTime;
             if (time > 0.15f && !Toss)
@@ -59,10 +67,35 @@ public class Fishing : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyUp(KeyCode.Space) && !isCasted && Toss)
+        if (Input.GetKeyUp(KeyCode.Space) && !isCasted && Toss && !CanBeCatched)
         {
             StartCoroutine(ThrowRod());
         }
+    }
+
+    public void Destroy()
+    {
+        if (CrosshairGameObject != null)
+            {
+                Destroy(CrosshairGameObject);
+            }
+        if (baitGameObject != null)
+            {
+                Destroy(baitGameObject);
+            }
+            if (crosshairScript != null)
+            {
+                Destroy(crosshairScript);
+            }
+        CanBeCatched = false;
+    }
+    public void ExternalRaise()
+    {
+        StartCoroutine(RaiseRod());
+    }
+    public void ExternalThrow()
+    {
+        StartCoroutine(ThrowRod());
     }
 
     private IEnumerator RaiseRod()
@@ -71,13 +104,19 @@ public class Fishing : MonoBehaviour
         float elapsedTime = 0f;
         while (elapsedTime < lerpDuration)
         {
+            if (rod != null)
+            {
             rod.transform.position = Vector3.Lerp(startRodPosition, endRodPosition, elapsedTime / lerpDuration);
             rod.transform.rotation = Quaternion.Lerp(startRodRotation, endRodRotation, elapsedTime / lerpDuration);
+            }
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        if (rod != null)
+            {
         rod.transform.position = endRodPosition;
         rod.transform.rotation = endRodRotation;
+            }
     }
 
     private IEnumerator ThrowRod()
@@ -86,13 +125,19 @@ public class Fishing : MonoBehaviour
         float elapsedTime = 0f;
         while (elapsedTime < lerpDuration)
         {
+            if (rod != null)
+            {
             rod.transform.position = Vector3.Lerp(endRodPosition, startRodPosition, elapsedTime / lerpDuration);
             rod.transform.rotation = Quaternion.Lerp(endRodRotation, startRodRotation, elapsedTime / lerpDuration);
+            }
             elapsedTime += Time.deltaTime * 2;
             yield return null;
         }
+        if (rod != null)
+            {
         rod.transform.position = startRodPosition;
         rod.transform.rotation = startRodRotation;
+            }
 
         StartCoroutine(CastBait());
     }
@@ -101,12 +146,14 @@ public class Fishing : MonoBehaviour
     {   
         
         yield return new WaitForEndOfFrame();
+        if (crosshairScript!=null)
+        {
         Vector3 targetPosition = crosshairScript.Stop();
         targetPosition = new Vector3 (targetPosition.x, -0.9f, targetPosition.z);
-        Destroy(CrosshairGameObject);
         baitGameObject = Instantiate(baitPrefab, BaitSpawnPosition, BaitSpawnRotation);
         StartCoroutine(MoveBaitToTarget(baitGameObject.transform, targetPosition));
         isCasted = true;
+        }
         yield return null;
     }
 
