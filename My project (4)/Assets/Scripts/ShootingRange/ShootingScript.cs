@@ -4,50 +4,45 @@ public class Shooter : MonoBehaviour
 {
     public GameObject projectile;
     public float power = 10.0f;
-    public AudioClip shootSFX;
     public float DestroyTime;
     public bool useRigidbody = false, calculateCamDistance = false;
     public LayerMask hitLayers;
+    public stateHandler stateHandler;
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (stateHandler.isPaused == false && stateHandler.isCompleted == false)
         {
-            if (projectile)
+            if (Input.GetButtonDown("Fire1"))
             {
-                Ray ray = new Ray(transform.position, transform.forward);
-                RaycastHit hit;
-
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, hitLayers))
+                if (projectile)
                 {
-                   //Debug.Log("Hit: " + hit.collider.name);
+                    Ray ray = new Ray(transform.position, transform.forward);
+                    RaycastHit hit;
 
-                    if (hit.collider.gameObject.CompareTag("Target"))
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, hitLayers))
                     {
-                        hit.collider.gameObject.GetComponent<Target>().KillTarget();
+                        //Debug.Log("Hit: " + hit.collider.name);
+
+                        if (hit.collider.gameObject.CompareTag("Target"))
+                        {
+                            hit.collider.gameObject.GetComponent<Target>().KillTarget();
+                        }
                     }
-                }
 
-                GameObject newProjectile = Instantiate(projectile, transform.position + transform.forward * (calculateCamDistance ? 1.2f : 0), transform.rotation * Quaternion.Euler(0, 90, 90));
-                Destroy(newProjectile, DestroyTime);
+                    GameObject newProjectile = Instantiate(projectile, transform.position + transform.forward * (calculateCamDistance ? 1.2f : 0), transform.rotation * Quaternion.Euler(0, 90, 90));
+                    Destroy(newProjectile, DestroyTime);
 
-                if (useRigidbody)
-                {
-                    if (!newProjectile.GetComponent<Rigidbody>())
-                        newProjectile.AddComponent<Rigidbody>();
-
-                    newProjectile.GetComponent<Rigidbody>().AddForce(transform.forward * power, ForceMode.VelocityChange);
-                }
-                
-                if (shootSFX)
-                {
-                    if (newProjectile.GetComponent<AudioSource>())
+                    if (useRigidbody)
                     {
-                        newProjectile.GetComponent<AudioSource>().PlayOneShot(shootSFX);
+                        if (!newProjectile.GetComponent<Rigidbody>())
+                            newProjectile.AddComponent<Rigidbody>();
+
+                        newProjectile.GetComponent<Rigidbody>().AddForce(transform.forward * power, ForceMode.VelocityChange);
                     }
-                    else
+                    if (SoundManager.sndm != null)
                     {
-                        AudioSource.PlayClipAtPoint(shootSFX, newProjectile.transform.position);
+                        SoundManager.sndm.Play("CartoonShot");
                     }
                 }
             }

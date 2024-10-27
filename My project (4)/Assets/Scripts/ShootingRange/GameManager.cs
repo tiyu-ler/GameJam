@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,6 +9,8 @@ public class GameManager : MonoBehaviour
     public TMP_Text timeText;
     public TMP_Text scoreText;
     public TMP_Text gameOverText;
+    public stateHandler stateHandler;
+    public string LoadScene;
 
     public int score = 0;
     private bool isGameOver = false; 
@@ -37,7 +40,7 @@ public class GameManager : MonoBehaviour
             GameOver();
         }
 
-        timeText.text = time.ToString("F2");
+        timeText.text ="Time: "+ time.ToString("F2");
     }
 
     public void ChangeScoreTime(int sc, float t)
@@ -56,10 +59,12 @@ public class GameManager : MonoBehaviour
         gameOverText.gameObject.SetActive(true);
         gameOverText.text = "Game Over";
         Invoke("reloadScene",2f);
+        stateHandler.isCompleted = true;
     }
     void reloadScene()
     {
         Scene scene = SceneManager.GetActiveScene();
+      //  SceneManager.LoadScene(LoadScene);
         SceneManager.LoadScene(scene.name);
     }
 }

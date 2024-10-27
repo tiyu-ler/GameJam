@@ -11,7 +11,6 @@ public class MainMenuScript : MonoBehaviour
     {
         MainMenu.SetActive(true);
        SoundManager.sndm.Play("MainTheme");
-
     }
 
     void Update()
