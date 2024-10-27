@@ -5,9 +5,10 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float movementSpeed = 3.0f;
-    public float sprintSpeed = 6.0f;  
+    public float sprintSpeed = 6.0f;
     public float gravity = 9.81f;
     private CharacterController myController;
+    public stateHandler stateHandler;
 
     void Start()
     {
@@ -16,13 +17,16 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        float movementY = Input.GetAxis("Vertical");
-        float movementX = Input.GetAxis("Horizontal");
+        if (stateHandler.isPaused == false && stateHandler.isCompleted == false)
+        {
+            float movementY = Input.GetAxis("Vertical");
+            float movementX = Input.GetAxis("Horizontal");
 
-        bool isRunning = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+            bool isRunning = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
 
-        Vector3 move = transform.right * movementX + transform.forward * movementY;
+            Vector3 move = transform.right * movementX + transform.forward * movementY;
 
-        myController.Move(move * (isRunning ? sprintSpeed : movementSpeed) * Time.deltaTime);
+            myController.Move(move * (isRunning ? sprintSpeed : movementSpeed) * Time.deltaTime);
+        }
     }
 }

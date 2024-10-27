@@ -1,7 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; 
+using UnityEngine.Audio;
+using System;
+using System.Collections.Generic;
 
 public class SoundSlidersHandler : MonoBehaviour
 {
@@ -11,24 +11,37 @@ public class SoundSlidersHandler : MonoBehaviour
     void Start()
     {
         sndm = SoundManager.sndm;
+        UpdateSliders();
     }
 
     void OnEnable()
     {
-        if (sndm != null && SndVolumeSlider != null)
+        if (sndm != null)
         {
-            SndVolumeSlider.value = SoundManager.SoundVolume;
-            MscVolumeSlider.value = SoundManager.MusicVolume;
-            AmbVolumeSlider.value = SoundManager.AmbientVolume;
+            UpdateSliders();
         }
     }
-    public void SetMusicVolume(){
-        SoundManager.sndm.UpdateMusicVolume(MscVolumeSlider.value);
+
+    private void UpdateSliders()
+    {
+        // Update slider values based on current SoundManager settings
+        SndVolumeSlider.value = sndm.SoundVolume;
+        MscVolumeSlider.value = sndm.MusicVolume;
+        AmbVolumeSlider.value = sndm.AmbientVolume;
     }
-    public void SetSoundVolume(){
-        SoundManager.sndm.UpdateSoundVolume(SndVolumeSlider.value);
+
+    public void SetMusicVolume()
+    {
+        sndm.UpdateMusicVolume(MscVolumeSlider.value);
     }
-    public void SetAmbientVolume(){
-        SoundManager.sndm.UpdateAmbientVolume(AmbVolumeSlider.value);
+
+    public void SetSoundVolume()
+    {
+        sndm.UpdateSoundVolume(SndVolumeSlider.value);
+    }
+
+    public void SetAmbientVolume()
+    {
+        sndm.UpdateAmbientVolume(AmbVolumeSlider.value);
     }
 }

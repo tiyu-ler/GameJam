@@ -10,8 +10,9 @@ public class MainMenuScript : MonoBehaviour
     void Start()
     {
         MainMenu.SetActive(true);
-       SoundManager.sndm.Play("MainTheme");
-
+        SoundManager.sndm.Play("MainTheme");
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     void Update()
@@ -31,8 +32,10 @@ public class MainMenuScript : MonoBehaviour
     {
         PlayerPrefs.SetInt("LelvelsPassed", 0);
     }
-    public void BeginGame(){
+    public void BeginGame()
+    {
         SceneManager.LoadScene("ShootingRange");
     }
+
 }
 

@@ -32,8 +32,14 @@ public class Target : MonoBehaviour
             GameManager.gm.ChangeScoreTime(adjustedScore, 0);
         }
 
-       // Debug.Log("Target hit!");
         Instantiate(ps, transform.position, Quaternion.Euler(-90, 0, 0));
+        if (SoundManager.sndm != null)
+        {
+            if (Random.Range(0f, 1f) > 0.5f)
+                SoundManager.sndm.Play("BaloonPop");
+            else
+                SoundManager.sndm.Play("BaloonPop2");
+        }
         Destroy(gameObject);
     }
 }
