@@ -1018,6 +1018,11 @@ MonoBehaviour:
   scoreText: {fileID: 2102050917}
   gameOverText: {fileID: 1484294550}
   score: 0
+--- !u!4 &461681677 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1033190784012067487, guid: 4b9ad035063eb5b468036717530f8d86, type: 3}
+  m_PrefabInstance: {fileID: 1063124146}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &483789926 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3689598106806532819, guid: f06eee385d4866044965e333c2d2375e, type: 3}
@@ -2826,7 +2831,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 7211697419433581654, guid: 1b31ffbd85f724441977f45487bf1c62, type: 3}
   power: 100
-  shootSFX: {fileID: 0}
+  shootSFX: {fileID: 8300000, guid: 942e970fa416eb947b136f07302cbdb4, type: 3}
   DestroyTime: 1
   useRigidbody: 1
   calculateCamDistance: 1
@@ -3171,6 +3176,67 @@ Transform:
   - {fileID: 504361418}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1063124146
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2140468203}
+    m_Modifications:
+    - target: {fileID: 1033190784012067487, guid: 4b9ad035063eb5b468036717530f8d86, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.010757
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033190784012067487, guid: 4b9ad035063eb5b468036717530f8d86, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.000027
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033190784012067487, guid: 4b9ad035063eb5b468036717530f8d86, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.0006179999
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033190784012067487, guid: 4b9ad035063eb5b468036717530f8d86, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.70701176
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033190784012067487, guid: 4b9ad035063eb5b468036717530f8d86, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.70701176
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033190784012067487, guid: 4b9ad035063eb5b468036717530f8d86, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.011595367
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033190784012067487, guid: 4b9ad035063eb5b468036717530f8d86, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.011595367
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033190784012067487, guid: 4b9ad035063eb5b468036717530f8d86, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 91.879
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033190784012067487, guid: 4b9ad035063eb5b468036717530f8d86, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033190784012067487, guid: 4b9ad035063eb5b468036717530f8d86, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7802449076154858714, guid: 4b9ad035063eb5b468036717530f8d86, type: 3}
+      propertyPath: shootSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: e21095d130755344289f6e6e420d4b33, type: 3}
+    - target: {fileID: 8120425935625349148, guid: 4b9ad035063eb5b468036717530f8d86, type: 3}
+      propertyPath: m_Name
+      value: FlashSpawner
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4b9ad035063eb5b468036717530f8d86, type: 3}
 --- !u!4 &1099712102 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3689598106806532819, guid: f06eee385d4866044965e333c2d2375e, type: 3}
@@ -5193,7 +5259,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 070c7fd956b72a946ac9229ca4741750, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 461681677}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 070c7fd956b72a946ac9229ca4741750, type: 3}
 --- !u!4 &2140468203 stripped
