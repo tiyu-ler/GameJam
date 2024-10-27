@@ -7,14 +7,12 @@ using UnityEngine.UI;
 public class MainMenuScript : MonoBehaviour
 {
     public GameObject MainMenu;
-    // Start is called before the first frame update
     void Start()
     {
-        // LelvelsPassed = PlayerPrefs.GetInt("LelvelsPassed",1);
         MainMenu.SetActive(true);
+       // public void Play(string sound)
     }
 
-    // Update is called once per frame
     void Update()
     {
 
