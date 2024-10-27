@@ -16,8 +16,8 @@ public class CielScript : MonoBehaviour
     public GameObject Fish2Fly;
     public GameObject Fish3Fly;
     public GameObject FishObject;
-    private int CurrentFish;
     private FishManagerScript fishManager;
+    private GameObject cantCatch;
     void Start()
     {
         fishManager = FindObjectOfType<FishManagerScript>();
@@ -52,13 +52,22 @@ public class CielScript : MonoBehaviour
             }
         }
     }
-    public void continueScript()
+    public void continueThrow()
     {
-        fishing.ExternalThrow();
         CanBeCatched = false;
         isBaitCaught = false;
         fishing.Destroy();
         fishing.NewToss();
+        fishing.ExternalThrow();
+        Destroy(transform.parent.gameObject);
+    }
+    public void stopThrow()
+    {
+        CanBeCatched = false;
+        isBaitCaught = false;
+        fishing.Destroy();
+        fishing.NewToss();
+        fishing.StopFishing();
         Destroy(transform.parent.gameObject);
     }
     private void OnTriggerEnter(Collider other) {

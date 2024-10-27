@@ -28,7 +28,7 @@ public class FishManagerScript : MonoBehaviour
     }
     public void SwitchFish()
     {
-        switch(CurrentFish)
+        switch (CurrentFish)
         {
             case 1: FishObject = Fish1Fly; break;
             case 2: FishObject = Fish2Fly; break;
@@ -38,7 +38,7 @@ public class FishManagerScript : MonoBehaviour
     }
     public void SwitchFishLay()
     {
-        switch(CurrentFish)
+        switch (CurrentFish)
         {
             case 1: Fish1Lay.SetActive(true); break;
             case 2: Fish2Lay.SetActive(true); break;
@@ -54,63 +54,69 @@ public class FishManagerScript : MonoBehaviour
     }
     private IEnumerator FishMovement()
     {
-        switch(CurrentFish)
+        switch (CurrentFish)
         {
-            
-            case 1: journey = 0;
-            cielScript = FindObjectOfType<CielScript>();
-        Vector3 startPosition = Fish1Fly.transform.position;
-        Vector3 targetPosition = new Vector3(startPosition.x, startPosition.y, startPosition.z-3.5f);
-        while (journey <= 1)
-        {
-            journey += Time.deltaTime / 4;
-            Fish1Fly.transform.position = Vector3.Lerp(startPosition, targetPosition, journey);
-            if (cielScript != null)
-            {
-                cielScript.continueScript();
-                Destroy(cielScript);
-            }
-            yield return null;
-        }SwitchFishLay();
-        fishMoved = true; break;
-            case 2: journey = 0;
-            cielScript = FindObjectOfType<CielScript>();
-        startPosition = Fish2Fly.transform.position;
-        targetPosition = new Vector3(startPosition.x, startPosition.y, startPosition.z-3.5f);
-        while (journey <= 1)
-        {
-            journey += Time.deltaTime / 4;
-            Fish2Fly.transform.position = Vector3.Lerp(startPosition, targetPosition, journey);
-            if (cielScript != null)
-            {
-                cielScript.continueScript();
-                Destroy(cielScript);
-            }
-            yield return null;
-        }SwitchFishLay();
-        fishMoved = true; break;
-            case 3: journey = 0;
-            cielScript = FindObjectOfType<CielScript>();
-        startPosition = Fish3Fly.transform.position;
-        targetPosition = new Vector3(startPosition.x, startPosition.y, startPosition.z-4f);
-        while (journey <= 1)
-        {
-            journey += Time.deltaTime / 4;
-            Fish3Fly.transform.position = Vector3.Lerp(startPosition, targetPosition, journey);
-            if (cielScript != null)
-            {
-                cielScript.continueScript();
-                Destroy(cielScript);
-            }
-            yield return null;
-        }SwitchFishLay();
-        fishMoved = true; break;
+
+            case 1:
+                journey = 0;
+                cielScript = FindObjectOfType<CielScript>();
+                Vector3 startPosition = Fish1Fly.transform.position;
+                Vector3 targetPosition = new Vector3(startPosition.x, startPosition.y, startPosition.z - 3.5f);
+                while (journey <= 1)
+                {
+                    journey += Time.deltaTime / 4;
+                    Fish1Fly.transform.position = Vector3.Lerp(startPosition, targetPosition, journey);
+                    if (cielScript != null)
+                    {
+                        cielScript.continueThrow();
+                        Destroy(cielScript);
+                    }
+                    yield return null;
+                }
+                SwitchFishLay();
+                fishMoved = true; break;
+            case 2:
+                journey = 0;
+                cielScript = FindObjectOfType<CielScript>();
+                startPosition = Fish2Fly.transform.position;
+                targetPosition = new Vector3(startPosition.x, startPosition.y, startPosition.z - 3.5f);
+                while (journey <= 1)
+                {
+                    journey += Time.deltaTime / 4;
+                    Fish2Fly.transform.position = Vector3.Lerp(startPosition, targetPosition, journey);
+                    if (cielScript != null)
+                    {
+                        cielScript.continueThrow();
+                        Destroy(cielScript);
+                    }
+                    yield return null;
+                }
+                SwitchFishLay();
+                fishMoved = true; break;
+            case 3:
+                journey = 0;
+                cielScript = FindObjectOfType<CielScript>();
+                startPosition = Fish3Fly.transform.position;
+                targetPosition = new Vector3(startPosition.x, startPosition.y, startPosition.z - 5.5f);
+                while (journey <= 1)
+                {
+                    journey += Time.deltaTime / 4;
+                    Fish3Fly.transform.position = Vector3.Lerp(startPosition, targetPosition, journey);
+                    if (cielScript != null)
+                    {
+                        cielScript.stopThrow();
+                        Destroy(cielScript);
+                    }
+                    yield return null;
+                }
+                SwitchFishLay();
+                fishMoved = true; break;
             default: break;
         }
         yield return null;
     }
     void Update()
     {
-        
+
     }
 }
