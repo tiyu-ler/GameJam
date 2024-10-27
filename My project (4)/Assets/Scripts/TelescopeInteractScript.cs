@@ -12,9 +12,9 @@ public class TelescopeInteractScript : MonoBehaviour
     public bool changedScene;
     private CameraFollow cameraFollowScript; // Reference to the CameraFollow script
     private bool isPlayerInRange = false;    // Flag to check if the player is within the trigger
-
+    public stateHandler stateHandler;
     private void Start()
-    {  
+    {
         changedScene = false;
         firstPack.SetActive(true);
         interactionUI.SetActive(false);
@@ -24,13 +24,20 @@ public class TelescopeInteractScript : MonoBehaviour
 
     private void Update()
     {
-        if (isPlayerInRange && Input.GetKeyDown(KeyCode.Space))
+        if (stateHandler.isPaused == false && stateHandler.isCompleted == false)
         {
-            changedScene = true;
-            firstPack.SetActive(false);
-            outlineObject.SetActive(true);
-            cameraFollowScript.IsMoved = false;
-            interactionUI.SetActive(false);
+            if (isPlayerInRange && Input.GetKeyDown(KeyCode.Space))
+            {
+                if (Random.Range(0f, 1f) > 0.5f)
+                    SoundManager.sndm.Play("Constelation_low_pitch");
+                else
+                    SoundManager.sndm.Play("Constelation_high_pitch");
+                changedScene = true;
+                firstPack.SetActive(false);
+                outlineObject.SetActive(true);
+                cameraFollowScript.IsMoved = false;
+                interactionUI.SetActive(false);
+            }
         }
     }
 

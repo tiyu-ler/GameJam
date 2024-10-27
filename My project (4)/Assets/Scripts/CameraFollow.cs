@@ -7,9 +7,9 @@ public class CameraFollow : MonoBehaviour
     public Transform player;
     public Transform Camera;
     private Camera mainCamera;
-    public List<GameObject> stars; 
-    public List<GameObject> Boxes; 
-    public List<Material> finishedStars; 
+    public List<GameObject> stars;
+    public List<GameObject> Boxes;
+    public List<Material> finishedStars;
     public RawImage outline;
     // public float MinFOV;
     // public float MaxFOV;
@@ -24,10 +24,11 @@ public class CameraFollow : MonoBehaviour
     public bool IsMoved;
     public float mouseSensitivity = 300f;
     public float raycastRange = 500f;          // Max distance for raycast to detect stars
-     private TelescopeInteractScript telescopeInteract;
+    private TelescopeInteractScript telescopeInteract;
     private GameObject currentStar;
     private bool isStarsCloseActive;
     private float targetFOV;
+    public stateHandler stateHandler;
     private void Start()
     {
         mainCamera = Camera.GetComponent<Camera>();
@@ -42,53 +43,60 @@ public class CameraFollow : MonoBehaviour
 
     void Update()
     {
-        // AdjustFovWithDistance();
-        // Update `isStarsCloseActive` status
-        isStarsCloseActive = GameObject.FindWithTag("StarsClose") != null && GameObject.FindWithTag("StarsClose").activeInHierarchy;
-        
-        // Set default color
-        outline.color = defaultColor;
-
-        // Raycast from camera's center towards stars
-        Ray ray = mainCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, raycastRange))
+        if (stateHandler.isPaused == false && stateHandler.isCompleted == false)
         {
-            if (hit.collider.CompareTag("StarsClose"))
-            {
-                currentStar = hit.collider.gameObject;
+            // AdjustFovWithDistance();
+            // Update `isStarsCloseActive` status
+            isStarsCloseActive = GameObject.FindWithTag("StarsClose") != null && GameObject.FindWithTag("StarsClose").activeInHierarchy;
 
-                if (isStarsCloseActive)
-                {
-                    outline.color = orangeColor;
-                }
-            }
-            if (hit.collider.CompareTag("Stars"))
+            // Set default color
+            outline.color = defaultColor;
+
+            // Raycast from camera's center towards stars
+            Ray ray = mainCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, raycastRange))
             {
-                interactionUI.SetActive(true);
-                currentStar = hit.collider.gameObject;
-                if (isStarsCloseActive)
+                if (hit.collider.CompareTag("StarsClose"))
                 {
-                    outline.color = greenColor; // Set to orange if within the StarsClose range
-                    if (Input.GetKeyDown(KeyCode.Space))
+                    currentStar = hit.collider.gameObject;
+
+                    if (isStarsCloseActive)
                     {
-                        CheckShoot();
+                        outline.color = orangeColor;
                     }
-                    
+                }
+                if (hit.collider.CompareTag("Stars"))
+                {
+                    interactionUI.SetActive(true);
+                    currentStar = hit.collider.gameObject;
+                    if (isStarsCloseActive)
+                    {
+                        outline.color = greenColor;
+                        if (Input.GetKeyDown(KeyCode.Space))
+                        {
+                            CheckShoot();
+                            if (Random.Range(0f, 1f) > 0.5f)
+                                SoundManager.sndm.Play("Constelation_low_pitch");
+                            else
+                                SoundManager.sndm.Play("Constelation_high_pitch");
+                        }
+
+                    }
+                }
+                else
+                {
+                    if (telescopeInteract != null && telescopeInteract.changedScene)
+                    {
+                        interactionUI.SetActive(false);
+                    }
                 }
             }
             else
             {
-                if (telescopeInteract != null && telescopeInteract.changedScene)
-                {
-                    interactionUI.SetActive(false);
-                }
+                currentStar = null;
             }
-        }
-        else
-        {
-            currentStar = null; // No star detected by the raycast
         }
     }
 
@@ -100,7 +108,7 @@ public class CameraFollow : MonoBehaviour
             starRenderer.material = finishedStars[starID];
             stars[starID].tag = "finished";
             Boxes[starID].SetActive(false);
-            Boxes[starID+1].SetActive(false);
+            Boxes[starID + 1].SetActive(false);
         }
     }
 
@@ -108,8 +116,8 @@ public class CameraFollow : MonoBehaviour
     {
         if (player != null && IsMoved)
         {
-	            transform.LookAt(player.transform);
-                // AdjustFovWithDistance();
+            transform.LookAt(player.transform);
+            // AdjustFovWithDistance();
         }
         else
         {

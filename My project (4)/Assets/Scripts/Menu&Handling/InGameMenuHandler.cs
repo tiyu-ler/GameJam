@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class MenuScript : MonoBehaviour
 {
-    public GameObject PauseMenu, SceneUi;
+    public GameObject PauseMenu, SceneUi, OptionsMenu;
     public stateHandler stateHandler;
 
     void Start()
@@ -34,6 +34,7 @@ public class MenuScript : MonoBehaviour
     {
         SceneUi.SetActive(false);
         PauseMenu.SetActive(true);
+        OptionsMenu.SetActive(false);
         Time.timeScale = 0;
     }
 
@@ -52,7 +53,7 @@ public class MenuScript : MonoBehaviour
         SceneUi.SetActive(true);
         PauseMenu.SetActive(false);
         Time.timeScale = 1f;
-
+        OptionsMenu.SetActive(false);
         Debug.Log("pog");
     }
 

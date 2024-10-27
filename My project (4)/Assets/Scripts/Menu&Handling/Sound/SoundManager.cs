@@ -133,4 +133,15 @@ public class SoundManager : MonoBehaviour
             s.source.volume = volume * AmbientVolume;
         }
     }
+    public void StopAllSounds()
+    {
+        foreach (var sound in soundDictionary.Values)
+        {
+            if (sound.source != null && sound.source.isPlaying)
+            {
+                sound.source.Stop();
+            }
+        }
+    }
+
 }

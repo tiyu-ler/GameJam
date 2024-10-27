@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     public Animator animator;
     private Rigidbody rb;
     private Vector3 movement;
-
+    public stateHandler stateHandler;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -16,14 +16,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
-        movement = new Vector3(moveHorizontal, 0f, moveVertical).normalized;
-        animator.SetFloat("walkSpeed", movement.magnitude * moveSpeed);
-        if (movement.magnitude > 0)
+        if (stateHandler.isPaused == false && stateHandler.isCompleted == false)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(movement);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            float moveHorizontal = Input.GetAxis("Horizontal");
+            float moveVertical = Input.GetAxis("Vertical");
+            movement = new Vector3(moveHorizontal, 0f, moveVertical).normalized;
+            animator.SetFloat("walkSpeed", movement.magnitude * moveSpeed);
+            if (movement.magnitude > 0)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(movement);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            }
         }
     }
 
