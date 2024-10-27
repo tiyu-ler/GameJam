@@ -31,4 +31,8 @@ public class MainMenuScript : MonoBehaviour
     {
         PlayerPrefs.SetInt("LelvelsPassed", 0);
     }
+    public void BeginGame(){
+        SceneManager.LoadScene("ShootingRange");
+    }
 }
+

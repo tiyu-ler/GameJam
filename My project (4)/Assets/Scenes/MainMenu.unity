@@ -5680,8 +5680,40 @@ PrefabInstance:
       value: SoundManager
       objectReference: {fileID: 0}
     - target: {fileID: 4429107834875505979, guid: 0235815aa3576a642aa23a0b694381a3, type: 3}
+      propertyPath: sounds.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429107834875505979, guid: 0235815aa3576a642aa23a0b694381a3, type: 3}
       propertyPath: sounds.Array.data[0].name
       value: MainTheme
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429107834875505979, guid: 0235815aa3576a642aa23a0b694381a3, type: 3}
+      propertyPath: sounds.Array.data[1].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3ba5c5f73ea6bce4d92b54dc80db1ee2, type: 3}
+    - target: {fileID: 4429107834875505979, guid: 0235815aa3576a642aa23a0b694381a3, type: 3}
+      propertyPath: sounds.Array.data[1].loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429107834875505979, guid: 0235815aa3576a642aa23a0b694381a3, type: 3}
+      propertyPath: sounds.Array.data[1].name
+      value: Click
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429107834875505979, guid: 0235815aa3576a642aa23a0b694381a3, type: 3}
+      propertyPath: sounds.Array.data[1].Music
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429107834875505979, guid: 0235815aa3576a642aa23a0b694381a3, type: 3}
+      propertyPath: sounds.Array.data[1].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429107834875505979, guid: 0235815aa3576a642aa23a0b694381a3, type: 3}
+      propertyPath: sounds.Array.data[1].volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429107834875505979, guid: 0235815aa3576a642aa23a0b694381a3, type: 3}
+      propertyPath: sounds.Array.data[1].pitchVariance
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4922497605145095818, guid: 0235815aa3576a642aa23a0b694381a3, type: 3}
       propertyPath: m_LocalPosition.x
