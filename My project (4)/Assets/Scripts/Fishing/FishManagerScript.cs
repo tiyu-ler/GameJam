@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FishManagerScript : MonoBehaviour
 {
@@ -94,6 +95,7 @@ public class FishManagerScript : MonoBehaviour
                 SwitchFishLay();
                 fishMoved = true; break;
             case 3:
+                SceneManager.LoadScene("ShootingRange");
                 journey = 0;
                 cielScript = FindObjectOfType<CielScript>();
                 startPosition = Fish3Fly.transform.position;
@@ -102,13 +104,15 @@ public class FishManagerScript : MonoBehaviour
                 {
                     journey += Time.deltaTime / 4;
                     Fish3Fly.transform.position = Vector3.Lerp(startPosition, targetPosition, journey);
-                    if (cielScript != null)
-                    {
-                        cielScript.stopThrow();
-                        Destroy(cielScript);
-                    }
+                    // if (cielScript != null)
+                    // {
+                    //     cielScript.stopThrow();
+                        
+                    //     Destroy(cielScript);
+                    // }
                     yield return null;
                 }
+                SceneManager.LoadScene("ShootingRange");
                 SwitchFishLay();
                 fishMoved = true; break;
             default: break;

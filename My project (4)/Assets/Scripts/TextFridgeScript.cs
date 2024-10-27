@@ -8,10 +8,12 @@ public class TextFridgeScript : MonoBehaviour
     public GameObject Exclamation;
     public Transform player;
     private bool isPlayerInRange = false;
+    private SceneLoader sceneLoader;
 
     void Start()
     {
         interactionUI.SetActive(false);
+        sceneLoader = FindObjectOfType<SceneLoader>();
     }
     private void Update()
     {
@@ -28,6 +30,10 @@ public class TextFridgeScript : MonoBehaviour
         {
             isPlayerInRange = true;
             interactionUI.SetActive(true);
+            if (sceneLoader != null)
+            {
+                sceneLoader.LoadNextScene();
+            }
         }
     }
 

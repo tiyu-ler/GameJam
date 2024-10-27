@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public string LoadScene;
 
     public int score = 0;
-    private bool isGameOver = false; 
+    private bool isGameOver = false;
     public static GameManager gm = null;
 
     void Awake()
@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
             GameOver();
         }
 
-        timeText.text ="Time: "+ time.ToString("F2");
+        timeText.text = "Time: " + time.ToString("F2");
     }
 
     public void ChangeScoreTime(int sc, float t)
@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
 
         score += sc;
         time += t;
-        Debug.Log("Score: "+score);
+        Debug.Log("Score: " + score);
         scoreText.text = "Score: " + score.ToString();
     }
 
@@ -58,15 +58,19 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
         gameOverText.gameObject.SetActive(true);
         gameOverText.text = "Game Completed !";
-        SoundManager.sndm.StopAllSounds();
-        SoundManager.sndm.Play("Fanfare");
-        Invoke("reloadScene",2.2f);
+        if (SoundManager.sndm != null)
+        {
+            SoundManager.sndm.StopAllSounds();
+            SoundManager.sndm.Play("Fanfare");
+        }
+        Invoke("reloadScene", 2.2f);
         stateHandler.isCompleted = true;
+
     }
     void reloadScene()
     {
-        Scene scene = SceneManager.GetActiveScene();
-      //  SceneManager.LoadScene(LoadScene);
-        SceneManager.LoadScene(scene.name);
+       // Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(LoadScene);
+       // SceneManager.LoadScene(scene.name);
     }
 }

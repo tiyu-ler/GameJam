@@ -34,7 +34,7 @@ public class MainMenuScript : MonoBehaviour
     }
     public void BeginGame()
     {
-        SceneManager.LoadScene("Stars");
+        SceneManager.LoadScene("Level_0");
     }
 
 }

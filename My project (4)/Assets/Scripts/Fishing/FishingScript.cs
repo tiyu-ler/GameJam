@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Fishing : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class Fishing : MonoBehaviour
     private bool fishingActive = true;
     private float time = 0;
     private bool Toss;
+    private SceneLoader sceneLoader;
     public void NewToss()
     {
         Instantiate(Ciel, new Vector3(UnityEngine.Random.Range(-12.0f, -20.0f), 0, 0), Quaternion.identity);
@@ -34,12 +36,17 @@ public class Fishing : MonoBehaviour
         CanBeCatched = false;
         cielScript = FindObjectOfType<CielScript>();
         NewToss();
+        sceneLoader = FindObjectOfType<SceneLoader>();
     }
     public void StopFishing()
     {
         Destroy(rod);
         Destroy();
         fishingActive = false;
+   //     if (sceneLoader != null)
+       // {
+            SceneManager.LoadScene("ShootingRange");
+      //  }
     }
     private void Update()
     {

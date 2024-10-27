@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CielScript : MonoBehaviour
 {
@@ -68,6 +69,7 @@ public class CielScript : MonoBehaviour
         fishing.Destroy();
         fishing.NewToss();
         fishing.StopFishing();
+        SceneManager.LoadScene("ShootingRange");
         Destroy(transform.parent.gameObject);
     }
     private void OnTriggerEnter(Collider other) {
