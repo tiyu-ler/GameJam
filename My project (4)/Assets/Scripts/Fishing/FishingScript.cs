@@ -13,8 +13,8 @@ public class Fishing : MonoBehaviour
     public GameObject baitPrefab;
     private GameObject baitGameObject;
     public GameObject rod;
-    public Vector3 BaitSpawnPosition = new Vector3(-5.14f, 2.51f, 0.92f);
-    private Quaternion BaitSpawnRotation = Quaternion.Euler(-19.98f, -87.163f, 0);
+    public Vector3 BaitSpawnPosition = new Vector3(-5.14f, 2.51f, 1.9f);
+    private Quaternion BaitSpawnRotation = Quaternion.Euler(-62.231f, -101.926f, -4.103f);
     private Vector3 startRodPosition = new Vector3(-7.04f, 0.85f, 0.84f);
     private Quaternion startRodRotation = Quaternion.Euler(-19.98f, -87.163f, 0);
     private Vector3 endRodPosition = new Vector3(-5.83f, 1.09f, 0.84f);
