@@ -57,8 +57,10 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
         gameOverText.gameObject.SetActive(true);
-        gameOverText.text = "Game Over";
-        Invoke("reloadScene",2f);
+        gameOverText.text = "Game Completed !";
+        SoundManager.sndm.StopAllSounds();
+        SoundManager.sndm.Play("Fanfare");
+        Invoke("reloadScene",2.2f);
         stateHandler.isCompleted = true;
     }
     void reloadScene()

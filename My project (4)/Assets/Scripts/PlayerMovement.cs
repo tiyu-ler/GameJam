@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -8,6 +9,9 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     private Vector3 movement;
     public stateHandler stateHandler;
+    private bool isSFXPlaying = false;
+    private bool stepturn;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -25,6 +29,10 @@ public class PlayerMovement : MonoBehaviour
             if (movement.magnitude > 0)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(movement);
+                if ((Mathf.Abs(moveHorizontal)+Mathf.Abs(moveVertical)) > 0 && !isSFXPlaying)
+                {
+                    StartCoroutine(PlayStep());
+                }
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
             }
         }
@@ -33,5 +41,22 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+    }
+    private IEnumerator PlayStep()
+    {
+        isSFXPlaying = true;
+
+        if (stepturn == true)
+        {
+            FindObjectOfType<SoundManager>().Play("Grass1");
+            stepturn = !stepturn;
+        }
+        else
+        {
+            FindObjectOfType<SoundManager>().Play("Grass2");
+            stepturn = !stepturn;
+        }
+        yield return new WaitForSeconds(0.60f);
+        isSFXPlaying = false;
     }
 }
