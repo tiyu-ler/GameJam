@@ -20,9 +20,9 @@ public class SoundManager : MonoBehaviour
 
     public AudioMixerGroup mixerGroup;
 
-    [Range(0f, 1f)] public static float MusicVolume = 0.5f;
-    [Range(0f, 1f)] public static float AmbientVolume = 0.5f;
-    [Range(0f, 1f)] public static float SoundVolume = 0.5f;
+    [Range(0f, 1f)] public float MusicVolume = 0.5f;
+    [Range(0f, 1f)] public float AmbientVolume = 0.5f;
+    [Range(0f, 1f)] public float SoundVolume = 0.5f;
 
     public SoundClass[] sounds;
     private Dictionary<string, SoundClass> soundDictionary;
