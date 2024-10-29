@@ -70,18 +70,23 @@ public class PillarTargetSpawner : MonoBehaviour
         }
     }
 
-    IEnumerator MoveTarget(GameObject target)
+IEnumerator MoveTarget(GameObject target)
+{
+    Vector3 moveDirectionVector = GetMoveDirectionVector();
+    Vector3 startPosition = target.transform.position;
+    Vector3 targetPosition = startPosition + (moveDirectionVector * MaxHeight);
+    while (target != null)
     {
-        Vector3 moveDirectionVector = GetMoveDirectionVector();
-        Vector3 startPosition = target.transform.position;
-        Vector3 targetPosition = startPosition + (moveDirectionVector * MaxHeight);
-
-        while (target != null && !(Vector3.Distance(target.transform.position, targetPosition) < 0.01f))
+        target.transform.position += moveDirectionVector * riseSpeed * Time.deltaTime;
+        if (Vector3.Distance(target.transform.position, targetPosition) <= 0.05f)
         {
-            target.transform.position += moveDirectionVector * riseSpeed * Time.deltaTime;
-            yield return null;
+            target.transform.position = targetPosition;
+            break;
         }
+        yield return null;
     }
+}
+
 
     Vector3 GetMoveDirectionVector()
     {
