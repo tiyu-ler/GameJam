@@ -27,7 +27,7 @@ public class PlayerSkiScript : MonoBehaviour
                 if (CurrentRow > 1)
                 {
                     CurrentRow -= 1;
-                    targetPosition += new Vector3(1.9f, 0f, 0f);
+                    targetPosition += new Vector3(1.8f, 0f, 0f);
                     animator.SetInteger("Turn", 1); // 1 - Left, 2 - Right; 3 - Go
                     StartCoroutine(LockTurnInput());
                 }
@@ -39,7 +39,7 @@ public class PlayerSkiScript : MonoBehaviour
                 if (CurrentRow < 5)
                 {
                     CurrentRow += 1;
-                    targetPosition += new Vector3(-1.9f, 0f, 0f);
+                    targetPosition += new Vector3(-1.8f, 0f, 0f);
                     animator.SetInteger("Turn", 2); // 1 - Left, 2 - Right; 3 - Go
                     StartCoroutine(LockTurnInput());
                 }

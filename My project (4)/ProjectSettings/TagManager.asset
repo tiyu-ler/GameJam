@@ -9,6 +9,7 @@ TagManager:
   - Projectile
   - finished
   - bait
+  - obstacle
   layers:
   - Default
   - TransparentFX
