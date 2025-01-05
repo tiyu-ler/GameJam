@@ -6,17 +6,19 @@ public class SkiSpawner : MonoBehaviour
 {
     public List<Transform> spawnPoints;
     public List<GameObject> prefabs;
+    public bool IsSpawning;
     public float minSpawnTime = 0.5f;
     public float maxSpawnTime = 1.8f;
     public float multipleSpawnChance = 0.3f;
     void Start()
     {
+        IsSpawning = true;
         StartCoroutine(Spawners());
     }
 
     private IEnumerator Spawners()
     {
-        while (true)
+        while (IsSpawning)
         {
             float randomInterval = Random.Range(minSpawnTime, maxSpawnTime);
             yield return new WaitForSeconds(randomInterval);

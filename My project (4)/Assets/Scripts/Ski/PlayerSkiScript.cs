@@ -10,11 +10,13 @@ public class PlayerSkiScript : MonoBehaviour
     private Animator animator;
     private bool canTurn = true;
     public float turnCooldown = 0.3f;
+    public SkiSpawner skiSpawner;
     void Start()
     {
         CurrentRow = 3;
         targetPosition = transform.position;
         animator = GetComponent<Animator>();
+        canTurn = true;
     }
 
     void Update()
@@ -44,6 +46,7 @@ public class PlayerSkiScript : MonoBehaviour
                     StartCoroutine(LockTurnInput());
                 }
             }
+            
         }
         transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * lerpSpeed);
     }
@@ -54,6 +57,30 @@ public class PlayerSkiScript : MonoBehaviour
         yield return new WaitForSeconds(turnCooldown);
         animator.SetInteger("Turn", 3);
         canTurn = true;
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.CompareTag("obstacle")) 
+        {
+            Death();
+        }
+    }
+
+    public void Death()
+    {
+        canTurn = false;
+        skiSpawner.IsSpawning = false;
+        GameObject[] obstacles = GameObject.FindGameObjectsWithTag("obstacle");
+
+        foreach (GameObject obstacle in obstacles)
+        {
+            SkiTrackscript skiTrackscript = obstacle.GetComponent<SkiTrackscript>();
+            if (skiTrackscript != null)
+            {
+                skiTrackscript.isRotating = false;
+            }
+        }
+        
     }
 
     public void ResetTurn()
