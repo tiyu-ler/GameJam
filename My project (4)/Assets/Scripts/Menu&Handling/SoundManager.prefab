@@ -45,10 +45,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mixerGroup: {fileID: 0}
+  MusicVolume: 0.5
+  AmbientVolume: 0.5
+  SoundVolume: 0.5
   sounds:
-  - name: Grinch's Ultimatom
+  - name: MainTheme
     clip: {fileID: 8300000, guid: 3ba5c5f73ea6bce4d92b54dc80db1ee2, type: 3}
-    volume: 0.5
+    volume: 0.409
     volumeVariance: 0
     pitch: 1
     pitchVariance: 0
@@ -57,4 +60,136 @@ MonoBehaviour:
     source: {fileID: 0}
     Music: 1
     Sound: 0
+    Ambient: 0
+  - name: Click
+    clip: {fileID: 8300000, guid: 05cc3179ed74ac744aa3b5079a06e5c2, type: 3}
+    volume: 0.5
+    volumeVariance: 0.2
+    pitch: 1
+    pitchVariance: 0.2
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+    Music: 0
+    Sound: 1
+    Ambient: 0
+  - name: BaloonPop
+    clip: {fileID: 8300000, guid: f5779dc387b8c3c43bc72c6a4e36e396, type: 3}
+    volume: 0.5
+    volumeVariance: 0.1
+    pitch: 1
+    pitchVariance: 0.25
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+    Music: 0
+    Sound: 1
+    Ambient: 0
+  - name: BaloonPop2
+    clip: {fileID: 8300000, guid: 61075292122ac3541862114c98e3231a, type: 3}
+    volume: 0.5
+    volumeVariance: 0.1
+    pitch: 1
+    pitchVariance: 0.2
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+    Music: 0
+    Sound: 1
+    Ambient: 0
+  - name: CartoonShot
+    clip: {fileID: 8300000, guid: 942e970fa416eb947b136f07302cbdb4, type: 3}
+    volume: 0.854
+    volumeVariance: 0.1
+    pitch: 1
+    pitchVariance: 0.2
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+    Music: 0
+    Sound: 1
+    Ambient: 0
+  - name: Constelation_high_pitch
+    clip: {fileID: 8300000, guid: e3ed29a24a729af40a4e7277bda13cc5, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0.15
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+    Music: 0
+    Sound: 1
+    Ambient: 0
+  - name: Constelation_low_pitch
+    clip: {fileID: 8300000, guid: 0ff97a25b13e80c41839022d52759ded, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0.15
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+    Music: 0
+    Sound: 1
+    Ambient: 0
+  - name: SpaceTheme
+    clip: {fileID: 8300000, guid: cbf1a696a75ccb146b64a4153c0f333e, type: 3}
+    volume: 0.494
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+    Music: 1
+    Sound: 0
+    Ambient: 0
+  - name: Grass1
+    clip: {fileID: 8300000, guid: 27f59d84e44b5684dbe0dc1e4b52c4d1, type: 3}
+    volume: 0.35
+    volumeVariance: 0.3
+    pitch: 1
+    pitchVariance: 0.3
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+    Music: 0
+    Sound: 1
+    Ambient: 0
+  - name: Grass2
+    clip: {fileID: 8300000, guid: 9f667b26385b2ec4f83a206b16004d62, type: 3}
+    volume: 0.35
+    volumeVariance: 0.25
+    pitch: 1
+    pitchVariance: 0.3
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+    Music: 0
+    Sound: 1
+    Ambient: 0
+  - name: Wood1
+    clip: {fileID: 8300000, guid: e081799cbf7f1b54aafb5151422c83d8, type: 3}
+    volume: 0.35
+    volumeVariance: 0.25
+    pitch: 1
+    pitchVariance: 0.3
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+    Music: 0
+    Sound: 1
+    Ambient: 0
+  - name: Wood2
+    clip: {fileID: 8300000, guid: 870e312fd3275a845919e97f1fe86cf9, type: 3}
+    volume: 0.35
+    volumeVariance: 0.25
+    pitch: 1
+    pitchVariance: 0.3
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+    Music: 0
+    Sound: 1
     Ambient: 0
