@@ -1,36 +1,44 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FirstPersonCamera : MonoBehaviour
 {
     public Transform player;
     public float mouseSensitivity = 2f;
-    float cameraVerticalRotation = 0f;
     public stateHandler stateHandler;
+    public int maxXrotation;
+    private float cameraVerticalRotation = 0f;
+    private float playerHorizontalRotation = 0f;
 
     void Start()
     {
+        playerHorizontalRotation = player.localEulerAngles.y;
+        cameraVerticalRotation = player.localEulerAngles.x;
         UpdateCursorState();
     }
     void Update()
     {
-        if (stateHandler.isPaused == false && stateHandler.isCompleted == false)
+        if (!stateHandler.isPaused && !stateHandler.isCompleted)
         {
-            float inputX = Input.GetAxis("Mouse X") * mouseSensitivity;
-            float inputY = Input.GetAxis("Mouse Y") * mouseSensitivity;
-
-            cameraVerticalRotation -= inputY;
-            cameraVerticalRotation = Mathf.Clamp(cameraVerticalRotation, -90f, 90f);
-
-            transform.localEulerAngles = Vector3.right * cameraVerticalRotation;
-
-            player.Rotate(Vector3.up * inputX);
+            HandleMouseInput();
         }
-
         UpdateCursorState();
     }
-    void UpdateCursorState()
+
+    private void HandleMouseInput()
+    {
+        float inputX = Input.GetAxis("Mouse X") * mouseSensitivity;
+        float inputY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+
+        cameraVerticalRotation -= inputY;
+        cameraVerticalRotation = Mathf.Clamp(cameraVerticalRotation, -70f, 50f);
+        transform.localEulerAngles = Vector3.right * cameraVerticalRotation;
+
+        playerHorizontalRotation += inputX;
+        playerHorizontalRotation = Mathf.Clamp(playerHorizontalRotation, -maxXrotation+90, maxXrotation+90); 
+        player.localEulerAngles = Vector3.up * playerHorizontalRotation;
+    }
+
+    private void UpdateCursorState()
     {
         if (stateHandler.isPaused || stateHandler.isCompleted)
         {
