@@ -4,13 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Stars
-  - StarsClose
   - Projectile
   - finished
   - bait
   - obstacle
   - Ground
+  - Target
+  - Constellation
   layers:
   - Default
   - TransparentFX

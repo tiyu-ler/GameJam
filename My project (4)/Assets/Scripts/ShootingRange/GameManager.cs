@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public int score = 0;
     private bool isGameOver = false;
     public static GameManager gm = null;
+    private bool isfanfare;
 
     void Awake()
     {
@@ -30,7 +31,9 @@ public class GameManager : MonoBehaviour
 
         gameOverText.gameObject.SetActive(false);
     }
-
+    void Start(){
+        isfanfare=false;
+    }
     void Update()
     {
         time -= Time.deltaTime;
@@ -58,10 +61,11 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
         gameOverText.gameObject.SetActive(true);
         gameOverText.text = "Game Completed !";
-        if (SoundManager.sndm != null)
+        if (SoundManager.sndm != null&&isfanfare==false)
         {
             SoundManager.sndm.StopAllSounds();
             SoundManager.sndm.Play("Fanfare");
+            isfanfare=true;
         }
         Invoke("reloadScene", 2.2f);
         stateHandler.isCompleted = true;

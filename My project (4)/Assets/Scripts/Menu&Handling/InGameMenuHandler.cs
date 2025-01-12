@@ -14,7 +14,10 @@ public class MenuScript : MonoBehaviour
         stateHandler.isCompleted = false;
 
         PauseMenu.SetActive(false);
-        SceneUi.SetActive(true);
+        if (SceneUi != null)
+        {
+            SceneUi.SetActive(true);
+        }
         //  GameOverMenu.SetActive(false);
         //  LevelPassedMenu.SetActive(false);
     }
@@ -50,7 +53,10 @@ public class MenuScript : MonoBehaviour
     public void gamecontinue()
     {
         stateHandler.isPaused = false;
-        SceneUi.SetActive(true);
+        if (SceneUi != null)
+        {
+            SceneUi.SetActive(true);
+        }
         PauseMenu.SetActive(false);
         Time.timeScale = 1f;
         OptionsMenu.SetActive(false);

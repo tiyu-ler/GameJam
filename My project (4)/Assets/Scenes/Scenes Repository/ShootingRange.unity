@@ -1056,7 +1056,7 @@ MonoBehaviour:
   scoreText: {fileID: 2102050917}
   gameOverText: {fileID: 1484294550}
   stateHandler: {fileID: 11400000, guid: cae55d464d0e7c5498c2adcc043e7221, type: 2}
-  LoadScene: Stars
+  LoadScene: Level_4(Snow)
   score: 0
 --- !u!4 &461681677 stripped
 Transform:

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4922497605145095818}
   - component: {fileID: 4429107834875505979}
   m_Layer: 0
-  m_Name: SoundManager
+  m_Name: SoundManagerDB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,18 +121,6 @@ MonoBehaviour:
     Music: 0
     Sound: 1
     Ambient: 0
-  - name: Constelation_low_pitch
-    clip: {fileID: 8300000, guid: 0ff97a25b13e80c41839022d52759ded, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0.15
-    loop: 0
-    mixerGroup: {fileID: 0}
-    source: {fileID: 0}
-    Music: 0
-    Sound: 1
-    Ambient: 0
   - name: SpaceTheme
     clip: {fileID: 8300000, guid: cbf1a696a75ccb146b64a4153c0f333e, type: 3}
     volume: 0.494
@@ -144,6 +132,18 @@ MonoBehaviour:
     source: {fileID: 0}
     Music: 1
     Sound: 0
+    Ambient: 0
+  - name: Constelation_low_pitch
+    clip: {fileID: 8300000, guid: 0ff97a25b13e80c41839022d52759ded, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0.15
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+    Music: 0
+    Sound: 1
     Ambient: 0
   - name: Grass1
     clip: {fileID: 8300000, guid: 27f59d84e44b5684dbe0dc1e4b52c4d1, type: 3}
@@ -192,4 +192,16 @@ MonoBehaviour:
     source: {fileID: 0}
     Music: 0
     Sound: 1
+    Ambient: 0
+  - name: Fanfare
+    clip: {fileID: 8300000, guid: 8bb98124810bc344ab3039bca0065425, type: 3}
+    volume: 0.345
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+    Music: 1
+    Sound: 0
     Ambient: 0

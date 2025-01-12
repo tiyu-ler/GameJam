@@ -19,6 +19,7 @@ public class FishManagerScript : MonoBehaviour
     private Vector3 targetPosition;
     private CielScript cielScript;
     private Fishing fishing;
+    public string NextSceneName;
     void Start()
     {
         Fish1Lay.SetActive(false);
@@ -112,7 +113,7 @@ public class FishManagerScript : MonoBehaviour
                     // }
                     yield return null;
                 }
-                SceneManager.LoadScene("ShootingRange");
+                SceneManager.LoadScene(NextSceneName);
                 SwitchFishLay();
                 fishMoved = true; break;
             default: break;

@@ -1,142 +1,126 @@
+using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CameraFollow : MonoBehaviour
 {
+    private Transform Camera;
     public Transform player;
-    public Transform Camera;
-    private Camera mainCamera;
-    public List<GameObject> stars;
-    public List<GameObject> Boxes;
-    public List<Material> finishedStars;
-    public RawImage outline;
-    // public float MinFOV;
-    // public float MaxFOV;
-    // public float ChangeFovWithDistance = 10f;
-    public GameObject interactionUI;
-    public Color defaultColor = Color.white;   // Default color when no star is targeted
-    private Color orangeColor = Color.yellow;
-    private Color greenColor = Color.green;
-
-    public Vector3 offset = new Vector3(0, 3.7f, -2.4f);  // Offset position from the player
-    public float smoothSpeed = 0.125f;         // Smooth factor for the camera's movement
-    public bool IsMoved;
-    public float mouseSensitivity = 300f;
-    public float raycastRange = 500f;          // Max distance for raycast to detect stars
-    private TelescopeInteractScript telescopeInteract;
-    private GameObject currentStar;
-    private bool isStarsCloseActive;
-    private float targetFOV;
+    public Vector3 offset;
+    public GameObject scope, telescope;
     public stateHandler stateHandler;
+    public int FollowSpeed, ScopeSpeed;
+    private Vector3 startCamPos;
+    public bool isUsingScope;
+    public float rayRange = 100f;
+    private int CrosshairColPick;
+
+    private GameObject detectedObject;
+
     private void Start()
     {
-        mainCamera = Camera.GetComponent<Camera>();
-        telescopeInteract = FindObjectOfType<TelescopeInteractScript>();
-        interactionUI.SetActive(false);
-        currentStar = null;
-        IsMoved = true;
-        outline.color = defaultColor;
-        // targetFOV = MaxFOV;
-        isStarsCloseActive = GameObject.FindWithTag("StarsClose") != null && GameObject.FindWithTag("StarsClose").activeInHierarchy;
+        Camera = gameObject.transform;
+        startCamPos = transform.position;
     }
 
     void Update()
     {
-        if (stateHandler.isPaused == false && stateHandler.isCompleted == false)
+        if (isUsingScope)
         {
-            // AdjustFovWithDistance();
-            // Update `isStarsCloseActive` status
-            isStarsCloseActive = GameObject.FindWithTag("StarsClose") != null && GameObject.FindWithTag("StarsClose").activeInHierarchy;
-
-            // Set default color
-            outline.color = defaultColor;
-
-            // Raycast from camera's center towards stars
-            Ray ray = mainCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, raycastRange))
+            
+            if (Input.GetKeyDown(KeyCode.Space)&&detectedObject != null)
             {
-                if (hit.collider.CompareTag("StarsClose"))
+                Debug.Log("1");
+                detectedObject.GetComponent<ConstellationScript>().triggerConst();
+                if (SoundManager.sndm != null)
                 {
-                    currentStar = hit.collider.gameObject;
-
-                    if (isStarsCloseActive)
-                    {
-                        outline.color = orangeColor;
-                    }
-                }
-                if (hit.collider.CompareTag("Stars"))
-                {
-                    interactionUI.SetActive(true);
-                    currentStar = hit.collider.gameObject;
-                    if (isStarsCloseActive)
-                    {
-                        outline.color = greenColor;
-                        if (Input.GetKeyDown(KeyCode.Space))
-                        {
-                            CheckShoot();
-                            if (Random.Range(0f, 1f) > 0.5f)
-                                SoundManager.sndm.Play("Constelation_low_pitch");
-                            else
-                                SoundManager.sndm.Play("Constelation_high_pitch");
-                        }
-
-                    }
-                }
-                else
-                {
-                    if (telescopeInteract != null && telescopeInteract.changedScene)
-                    {
-                        interactionUI.SetActive(false);
-                    }
+                    if (Random.Range(0f, 1f) > 0.5f)
+                        SoundManager.sndm.Play("Constelation_low_pitch");
+                    else
+                        SoundManager.sndm.Play("Constelation_high_pitch");
                 }
             }
-            else
-            {
-                currentStar = null;
-            }
         }
+        //if (isUsingScope && Input.GetKeyDown(KeyCode.Escape)))
+       // {
+       //     isUsingScope = false;
+       //     telescope.GetComponent<TelescopeInteractScript>().RemoveTelescopeUi();
+       // }
+       Debug.Log(detectedObject);
     }
 
-    private void CheckShoot()
+    void LateUpdate()
     {
-        int starID = int.Parse(currentStar.name) - 1;
-        {
-            Renderer starRenderer = stars[starID].GetComponent<Renderer>();
-            starRenderer.material = finishedStars[starID];
-            stars[starID].tag = "finished";
-            Boxes[starID].SetActive(false);
-            Boxes[starID + 1].SetActive(false);
-        }
-    }
-
-    private void LateUpdate()
-    {
-        if (player != null && IsMoved)
-        {
-            transform.LookAt(player.transform);
-            // AdjustFovWithDistance();
-        }
+        if (!isUsingScope)
+            CamFollow();
         else
         {
             RotateCamera();
+            DetectObject();
         }
     }
-    // private void AdjustFovWithDistance()
-    // {
-    //     float distance = Vector3.Distance(Camera.position, player.position);
-    //     float clampedDistance = Mathf.Clamp(distance, 10f, 20f);
-    //     float normalizedDistance = ;
-    //     Mathf.Lerp(MinFOV, MaxFOV, Time.deltaTime);
-    // }
+
     void RotateCamera()
     {
         Camera.position = new Vector3(0, 0, 0);
-        float mouseX = Input.GetAxis("Horizontal") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Vertical") * mouseSensitivity * Time.deltaTime;
+        float mouseX = Input.GetAxis("Horizontal") * ScopeSpeed * Time.deltaTime;
+        float mouseY = Input.GetAxis("Vertical") * ScopeSpeed * Time.deltaTime;
         Camera.transform.Rotate(Vector3.up * mouseX);
         Camera.transform.Rotate(Vector3.left * mouseY);
+    }
+
+    void CamFollow()
+    {
+        Vector3 desiredPosition = startCamPos + (player.position * offset.magnitude);
+
+        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, FollowSpeed);
+
+        transform.position = smoothedPosition;
+        transform.LookAt(player);
+    }
+
+    void DetectObject()
+    {
+        Ray ray = new Ray(Camera.position, Camera.forward);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, rayRange))
+        {
+            if (hit.collider.gameObject.CompareTag("Constellation") && hit.collider is BoxCollider)
+            {
+                if (CrosshairColPick != 1) { ScopeCollor(1); }
+                if (detectedObject == null) { detectedObject = hit.collider.gameObject;}
+                
+            }
+            else
+            {
+                Debug.Log("11");
+                detectedObject = null;
+                if (CrosshairColPick != 0) { ScopeCollor(0); }
+            }
+        }
+        else
+        {
+            Debug.Log("122");
+            detectedObject = null;
+            if (CrosshairColPick != 0) { ScopeCollor(0); }
+        }
+    }
+    void ScopeCollor(int a)
+    {
+        RawImage img = scope.GetComponent<RawImage>();
+        switch (a)
+        {
+            case (1):
+                img.color = Color.blue;
+                CrosshairColPick = 1;
+                break;
+            case (0):
+                img.color = Color.white;
+                CrosshairColPick = 0;
+                break;
+        }
     }
 }

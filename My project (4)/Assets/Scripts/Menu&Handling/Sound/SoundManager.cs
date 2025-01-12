@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Audio;
-using System;
 using System.Collections.Generic;
 
 public class SoundManager : MonoBehaviour
@@ -12,7 +11,31 @@ public class SoundManager : MonoBehaviour
         {
             if (_instance == null)
             {
+
                 _instance = FindObjectOfType<SoundManager>();
+
+                if (_instance == null)
+                {
+                    GameObject prefab = Resources.Load<GameObject>("SoundManagerDB"); 
+                    if (prefab != null)
+                    {
+                        GameObject instance = Instantiate(prefab);
+                        _instance = instance.GetComponent<SoundManager>();
+
+                        if (_instance == null)
+                        {
+                            Debug.LogError("Sound manager prefab does not contain sound manager class!");
+                        }
+                        else
+                        {
+                            Debug.Log("SoundManager created from prefs.");
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError("soundmanager prefab does not exist or not found");
+                    }
+                }
             }
             return _instance;
         }
@@ -118,7 +141,6 @@ public class SoundManager : MonoBehaviour
 
     private void UpdateSourceVolume(SoundClass s)
     {
-        // Adjust volume based on type
         float volume = s.volume * UnityEngine.Random.Range(1f - s.volumeVariance / 2f, 1f + s.volumeVariance / 2f);
         if (s.Music)
         {
@@ -133,6 +155,7 @@ public class SoundManager : MonoBehaviour
             s.source.volume = volume * AmbientVolume;
         }
     }
+
     public void StopAllSounds()
     {
         foreach (var sound in soundDictionary.Values)
@@ -143,5 +166,4 @@ public class SoundManager : MonoBehaviour
             }
         }
     }
-
 }

@@ -6,7 +6,7 @@ public class TelescopeInteractScript : MonoBehaviour
 {
     public GameObject firstPack;           // Location, telescope, light, etc.
     public GameObject secondPack;          // Starry sky
-    public GameObject interactionUI;       // UI element that says "Press Space"
+    public GameObject interactionUI,ScoreText;       // UI element that says "Press Space"
     public Transform player;               // Reference to the player
     public GameObject outlineObject;
     public bool changedScene;
@@ -15,11 +15,7 @@ public class TelescopeInteractScript : MonoBehaviour
     public stateHandler stateHandler;
     private void Start()
     {
-        changedScene = false;
-        firstPack.SetActive(true);
-        interactionUI.SetActive(false);
-        outlineObject.SetActive(false);
-        cameraFollowScript = Camera.main.GetComponent<CameraFollow>();
+        RemoveTelescopeUi();
     }
 
     private void Update()
@@ -28,15 +24,19 @@ public class TelescopeInteractScript : MonoBehaviour
         {
             if (isPlayerInRange && Input.GetKeyDown(KeyCode.Space))
             {
-                if (Random.Range(0f, 1f) > 0.5f)
-                    SoundManager.sndm.Play("Constelation_low_pitch");
-                else
-                    SoundManager.sndm.Play("Constelation_high_pitch");
+                // if (SoundManager.sndm != null)
+                // {
+                //     if (Random.Range(0f, 1f) > 0.5f)
+                //         SoundManager.sndm.Play("Constelation_low_pitch");
+                //     else
+                //         SoundManager.sndm.Play("Constelation_high_pitch");
+                // }
                 changedScene = true;
                 firstPack.SetActive(false);
                 outlineObject.SetActive(true);
-                cameraFollowScript.IsMoved = false;
                 interactionUI.SetActive(false);
+                cameraFollowScript.isUsingScope = true;
+                ScoreText.SetActive(true);
             }
         }
     }
@@ -59,5 +59,13 @@ public class TelescopeInteractScript : MonoBehaviour
             isPlayerInRange = false;
             interactionUI.SetActive(false); // Hide interaction UI
         }
+    }
+    public void RemoveTelescopeUi(){
+        changedScene = false;
+        firstPack.SetActive(true);
+        interactionUI.SetActive(false);
+        outlineObject.SetActive(false);
+        ScoreText.SetActive(false);
+        cameraFollowScript = Camera.main.GetComponent<CameraFollow>();
     }
 }

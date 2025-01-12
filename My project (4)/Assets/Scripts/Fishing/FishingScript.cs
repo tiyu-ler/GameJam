@@ -25,7 +25,8 @@ public class Fishing : MonoBehaviour
     private bool fishingActive = true;
     private float time = 0;
     private bool Toss;
-    private SceneLoader sceneLoader;
+    //private SceneLoader sceneLoader;
+    public stateHandler stateHandler;
     public void NewToss()
     {
         Instantiate(Ciel, new Vector3(UnityEngine.Random.Range(-12.0f, -20.0f), 0, 0), Quaternion.identity);
@@ -36,52 +37,55 @@ public class Fishing : MonoBehaviour
         CanBeCatched = false;
         cielScript = FindObjectOfType<CielScript>();
         NewToss();
-        sceneLoader = FindObjectOfType<SceneLoader>();
+       // sceneLoader = FindObjectOfType<SceneLoader>();
     }
     public void StopFishing()
     {
         Destroy(rod);
         Destroy();
         fishingActive = false;
-   //     if (sceneLoader != null)
-       // {
-            SceneManager.LoadScene("ShootingRange");
-      //  }
+        //     if (sceneLoader != null)
+        // {
+        SceneManager.LoadScene("Level_02");
+        //  }
     }
     private void Update()
     {
-        if (fishingActive)
+        if (stateHandler.isPaused == false && stateHandler.isCompleted == false)
         {
-            if (Input.GetKeyDown(KeyCode.Space) && !isCasted && !CanBeCatched)
+            if (fishingActive)
             {
-                time = 0;
-                Toss = false;
-                if (CrosshairGameObject != null)
+                if (Input.GetKeyDown(KeyCode.Space) && !isCasted && !CanBeCatched)
                 {
-                    Destroy(CrosshairGameObject);
+                    time = 0;
+                    Toss = false;
+                    if (CrosshairGameObject != null)
+                    {
+                        Destroy(CrosshairGameObject);
+                    }
+                    if (baitGameObject != null)
+                    {
+                        Destroy(baitGameObject);
+                    }
+                    CrosshairGameObject = Instantiate(Crosshair, new Vector3(-20, -0.56f, -0.13f), Quaternion.Euler(90, 0, 0));
+                    crosshairScript = CrosshairGameObject.GetComponent<FishingCrosshairScript>();
                 }
-                if (baitGameObject != null)
-                {
-                    Destroy(baitGameObject);
-                }
-                CrosshairGameObject = Instantiate(Crosshair, new Vector3(-20, -0.56f, -0.13f), Quaternion.Euler(90, 0, 0));
-                crosshairScript = CrosshairGameObject.GetComponent<FishingCrosshairScript>();
-            }
 
-            if (Input.GetKey(KeyCode.Space) && !isCasted && !CanBeCatched)
-            {
-                time += Time.deltaTime;
-                if (time > 0.15f && !Toss)
+                if (Input.GetKey(KeyCode.Space) && !isCasted && !CanBeCatched)
                 {
-                    Toss = true;
-                    crosshairScript.LetMove();
-                    StartCoroutine(RaiseRod());
+                    time += Time.deltaTime;
+                    if (time > 0.15f && !Toss)
+                    {
+                        Toss = true;
+                        crosshairScript.LetMove();
+                        StartCoroutine(RaiseRod());
+                    }
                 }
-            }
 
-            if (Input.GetKeyUp(KeyCode.Space) && !isCasted && Toss && !CanBeCatched)
-            {
-                StartCoroutine(ThrowRod());
+                if (Input.GetKeyUp(KeyCode.Space) && !isCasted && Toss && !CanBeCatched)
+                {
+                    StartCoroutine(ThrowRod());
+                }
             }
         }
     }
