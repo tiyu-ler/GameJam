@@ -35,6 +35,8 @@ public class MenuScript : MonoBehaviour
         SceneUi.SetActive(false);
         PauseMenu.SetActive(true);
         OptionsMenu.SetActive(false);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0;
     }
 
@@ -48,12 +50,12 @@ public class MenuScript : MonoBehaviour
     public void gamecontinue()
     {
         stateHandler.isPaused = false;
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
         SceneUi.SetActive(true);
         PauseMenu.SetActive(false);
         Time.timeScale = 1f;
         OptionsMenu.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         Debug.Log("pog");
     }
 

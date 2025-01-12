@@ -29,8 +29,8 @@ public class TextFridgeScript : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerInRange = true;
-            interactionUI.SetActive(true);
-            if (sceneLoader != null)
+            interactionUI.SetActive(true); 
+            if (Input.GetKeyDown(KeyCode.Space)&&sceneLoader!= null)
             {
                 sceneLoader.LoadNextScene();
             }
