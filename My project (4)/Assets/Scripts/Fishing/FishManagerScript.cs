@@ -102,7 +102,7 @@ public class FishManagerScript : MonoBehaviour
             case 3:
                 // SceneManager.LoadScene("ShootingRange");
                 StartCoroutine(StartNewScene());
-                stateHandler.isCompleted = true;
+                // stateHandler.isCompleted = true;
                 journey = 0;
                 cielScript = FindObjectOfType<CielScript>();
                 startPosition = Fish3Fly.transform.position;
@@ -128,7 +128,7 @@ public class FishManagerScript : MonoBehaviour
     }
     private IEnumerator StartNewScene()
     {
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(6.5f);
         SceneManager.LoadScene(NextSceneName);
         fishing.stateHandler.isCompleted = true;
         yield return null;
