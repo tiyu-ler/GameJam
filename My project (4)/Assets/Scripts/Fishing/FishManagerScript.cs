@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,6 +21,7 @@ public class FishManagerScript : MonoBehaviour
     private CielScript cielScript;
     private Fishing fishing;
     public string NextSceneName;
+    private stateHandler stateHandler;
     void Start()
     {
         Fish1Lay.SetActive(false);
@@ -27,6 +29,7 @@ public class FishManagerScript : MonoBehaviour
         Fish3Lay.SetActive(false);
         CurrentFish = 1;
         fishing = FindObjectOfType<Fishing>();
+
     }
     public void SwitchFish()
     {
@@ -40,6 +43,7 @@ public class FishManagerScript : MonoBehaviour
     }
     public void SwitchFishLay()
     {
+        if (SoundManager.sndm != null){SoundManager.sndm.Play("FishDrop");}
         switch (CurrentFish)
         {
             case 1: Fish1Lay.SetActive(true); break;
@@ -98,6 +102,7 @@ public class FishManagerScript : MonoBehaviour
             case 3:
                 // SceneManager.LoadScene("ShootingRange");
                 StartCoroutine(StartNewScene());
+                stateHandler.isCompleted = true;
                 journey = 0;
                 cielScript = FindObjectOfType<CielScript>();
                 startPosition = Fish3Fly.transform.position;
@@ -114,6 +119,7 @@ public class FishManagerScript : MonoBehaviour
                     yield return null;
                 }
                 SceneManager.LoadScene(NextSceneName);
+                fishing.stateHandler.isCompleted = true;
                 SwitchFishLay();
                 fishMoved = true; break;
             default: break;
@@ -122,8 +128,9 @@ public class FishManagerScript : MonoBehaviour
     }
     private IEnumerator StartNewScene()
     {
-        yield return new WaitForSeconds(6.5f);
-        SceneManager.LoadScene("ShootingRange");
+        yield return new WaitForSeconds(2.5f);
+        SceneManager.LoadScene(NextSceneName);
+        fishing.stateHandler.isCompleted = true;
         yield return null;
     }
 }

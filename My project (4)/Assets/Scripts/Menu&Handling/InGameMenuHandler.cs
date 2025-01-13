@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
@@ -7,6 +8,7 @@ public class MenuScript : MonoBehaviour
 {
     public GameObject PauseMenu, SceneUi, OptionsMenu;
     public stateHandler stateHandler;
+    public bool isChangedPause;
 
     void Start()
     {
@@ -18,8 +20,6 @@ public class MenuScript : MonoBehaviour
         {
             SceneUi.SetActive(true);
         }
-        //  GameOverMenu.SetActive(false);
-        //  LevelPassedMenu.SetActive(false);
     }
 
     void Update()
@@ -35,17 +35,20 @@ public class MenuScript : MonoBehaviour
 
     void gamepause()
     {
-        SceneUi.SetActive(false);
+        if (SceneUi != null)
+        {
+            SceneUi.SetActive(false);
+        }
         PauseMenu.SetActive(true);
         OptionsMenu.SetActive(false);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0;
+
     }
 
     void gameOver()
     {
-        // GameOverMenu.SetActive(true);
         Time.timeScale = 0;
         stateHandler.isCompleted = true;
     }
@@ -62,7 +65,7 @@ public class MenuScript : MonoBehaviour
         OptionsMenu.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        Debug.Log("pog");
+        Debug.Log("game continues");
     }
 
     public void LoadMainMenu()
@@ -85,6 +88,7 @@ public class MenuScript : MonoBehaviour
 
     public void TriggerPause()
     {
+        StartCoroutine(SetIsChangedPause());
         stateHandler.isPaused = !stateHandler.isPaused;
 
         if (stateHandler.isPaused)
@@ -95,5 +99,12 @@ public class MenuScript : MonoBehaviour
         {
             gamecontinue();
         }
+    }
+
+    private IEnumerator SetIsChangedPause()
+    {
+        isChangedPause = true; 
+        yield return new WaitForSecondsRealtime(0.1f); 
+        isChangedPause = false; 
     }
 }

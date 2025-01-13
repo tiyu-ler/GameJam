@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -29,6 +28,7 @@ public class Fishing : MonoBehaviour
     public stateHandler stateHandler;
     public void NewToss()
     {
+        if (SoundManager.sndm != null){SoundManager.sndm.Play("WaterSplash");}
         Instantiate(Ciel, new Vector3(UnityEngine.Random.Range(-12.0f, -20.0f), 0, 0), Quaternion.identity);
     }
     void Start()
@@ -37,7 +37,7 @@ public class Fishing : MonoBehaviour
         CanBeCatched = false;
         cielScript = FindObjectOfType<CielScript>();
         NewToss();
-       // sceneLoader = FindObjectOfType<SceneLoader>();
+        // sceneLoader = FindObjectOfType<SceneLoader>();
     }
     public void StopFishing()
     {
@@ -46,7 +46,6 @@ public class Fishing : MonoBehaviour
         fishingActive = false;
         //     if (sceneLoader != null)
         // {
-        SceneManager.LoadScene("Level_02");
         //  }
     }
     private void Update()
@@ -57,6 +56,13 @@ public class Fishing : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.Space) && !isCasted && !CanBeCatched)
                 {
+                    if (SoundManager.sndm != null)
+                    {
+                        if (Random.Range(0f, 1f) > 0.5f)
+                            SoundManager.sndm.Play("Sweep1");
+                        else
+                            SoundManager.sndm.Play("Sweep2");
+                    }
                     time = 0;
                     Toss = false;
                     if (CrosshairGameObject != null)
@@ -187,6 +193,7 @@ public class Fishing : MonoBehaviour
             baitTransform.rotation = Quaternion.Lerp(BaitSpawnRotation, Quaternion.Euler(0, 0, 0), journey);
             yield return null;
         }
+        if (SoundManager.sndm != null) { SoundManager.sndm.Play("Bobber"); }
         isCasted = false;
     }
 }

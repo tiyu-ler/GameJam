@@ -33,6 +33,10 @@ public class GameManager : MonoBehaviour
     }
     void Start(){
         isfanfare=false;
+        if(SoundManager.sndm!=null){
+            SoundManager.sndm.StopAllSounds();
+            SoundManager.sndm.Play("ShootingRangeTheme");
+        }
     }
     void Update()
     {
@@ -52,7 +56,7 @@ public class GameManager : MonoBehaviour
 
         score += sc;
         time += t;
-        Debug.Log("Score: " + score);
+//        Debug.Log("Score: " + score);
         scoreText.text = "Score: " + score.ToString();
     }
 

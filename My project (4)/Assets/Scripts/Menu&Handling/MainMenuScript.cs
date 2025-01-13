@@ -10,7 +10,8 @@ public class MainMenuScript : MonoBehaviour
     void Start()
     {
         MainMenu.SetActive(true);
-        //SoundManager.sndm.Play("MainTheme");
+        SoundManager.sndm.StopAllSounds();
+        SoundManager.sndm.Play("MainTheme");
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }

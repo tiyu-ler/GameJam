@@ -9,11 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels/MainMenu.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/Levels/Level_0.unity
-    guid: f97478c14f93f324bb07adc921efd9f4
-  - enabled: 1
-    path: Assets/Scenes/Levels/Level_1.unity
-    guid: 04a69b4c4a28c834b8e63c761805e81e
+    path: Assets/Scenes/Levels/Level_4(Snow).unity
+    guid: b41831a905bea3e488a20108891222a3
   - enabled: 1
     path: Assets/Scenes/Levels/Level_2.unity
     guid: d676b72acd6fcef4ebbfd1ffe3bdfa51
@@ -21,21 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels/Level_3.unity
     guid: fa8204b1800f4b044ad3996263f5250c
   - enabled: 1
-    path: Assets/Scenes/Levels/Level_4(Snow).unity
-    guid: b41831a905bea3e488a20108891222a3
-  - enabled: 0
-    path: Assets/Scenes/Scenes Repository/111.unity
-    guid: 31b3490eb6c3108478c82480a0f7a5ad
-  - enabled: 0
-    path: Assets/Scenes/Scenes Repository/Fishing Old.unity
-    guid: 60db5ed116b66624e91c102f762ab1e1
-  - enabled: 0
-    path: Assets/Scenes/Scenes Repository/Stars.unity
-    guid: c020cff1dae6dcc449e7656d0e9d0db7
-  - enabled: 0
-    path: Assets/Scenes/Scenes Repository/MainMenu.unity
-    guid: f98fb76c9b645f54e8af81f840921b87
-  - enabled: 0
-    path: Assets/Scenes/Scenes Repository/ShootingRange.unity
-    guid: bc871beb2a881384c9df40ff41a4ee0a
+    path: Assets/Scenes/Levels/Level_1.unity
+    guid: 04a69b4c4a28c834b8e63c761805e81e
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level_0.unity
+    guid: f97478c14f93f324bb07adc921efd9f4
   m_configObjects: {}

@@ -31,7 +31,10 @@ public class Shooter : MonoBehaviour
                     }
 
                     GameObject newProjectile = Instantiate(projectile, transform.position + transform.forward * (calculateCamDistance ? 1.2f : 0), transform.rotation * Quaternion.Euler(0, 90, 90));
-                    Destroy(newProjectile, DestroyTime);
+                    if (newProjectile != null)
+                    {
+                        Destroy(newProjectile, DestroyTime);
+                    }
 
                     if (useRigidbody)
                     {
