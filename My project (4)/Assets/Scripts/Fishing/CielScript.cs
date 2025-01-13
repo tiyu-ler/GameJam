@@ -19,6 +19,7 @@ public class CielScript : MonoBehaviour
     public GameObject FishObject;
     private FishManagerScript fishManager;
     private GameObject cantCatch;
+
     void Start()
     {
         fishManager = FindObjectOfType<FishManagerScript>();
@@ -38,6 +39,7 @@ public class CielScript : MonoBehaviour
                 fishing.ExternalRaise();
                 
                 fishManager.ExternalFishMovement();
+                
                 // Debug.Log("Ok 1");
                 // if (fishManager.fishMoved)
                 // {
@@ -69,12 +71,13 @@ public class CielScript : MonoBehaviour
         fishing.Destroy();
         fishing.NewToss();
         fishing.StopFishing();
-        SceneManager.LoadScene("ShootingRange");
+        // SceneManager.LoadScene("ShootingRange");
         Destroy(transform.parent.gameObject);
     }
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "bait")
         {
+            Debug.Log(1);
             Bait = other.gameObject;
         }
     }
@@ -102,6 +105,7 @@ public class CielScript : MonoBehaviour
         }
         isBaitCaught = true;
         CanBeCatched = true;
+        // Bait = null;
         }
         yield return null;
     }

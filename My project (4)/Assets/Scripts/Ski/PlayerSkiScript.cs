@@ -1,22 +1,37 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerSkiScript : MonoBehaviour
 {
     private int CurrentRow;
     private Vector3 targetPosition;
+    public GameObject track;
+    public GameObject WinScreen;
+    public GameObject DeathScreen;
     private float lerpSpeed = 7f;
     private Animator animator;
     private bool canTurn = true;
     public float turnCooldown = 0.3f;
     public SkiSpawner skiSpawner;
+    private bool isDead;
+    private bool canBeDead;
+    private GameObject[] obstacles;
     void Start()
     {
+        isDead = false;
+        canBeDead = true;
+        DeathScreen.SetActive(false);
+        WinScreen.SetActive(false);
         CurrentRow = 3;
         targetPosition = transform.position;
         animator = GetComponent<Animator>();
+        animator.speed = 1;
         canTurn = true;
+        StartCoroutine(Win());
     }
 
     void Update()
@@ -68,19 +83,83 @@ public class PlayerSkiScript : MonoBehaviour
 
     public void Death()
     {
-        canTurn = false;
-        skiSpawner.IsSpawning = false;
-        GameObject[] obstacles = GameObject.FindGameObjectsWithTag("obstacle");
-
-        foreach (GameObject obstacle in obstacles)
+        if (canBeDead)
         {
-            SkiTrackscript skiTrackscript = obstacle.GetComponent<SkiTrackscript>();
-            if (skiTrackscript != null)
-            {
-                skiTrackscript.isRotating = false;
-            }
+            isDead = true;
+            animator.speed = 0;
+            canTurn = false;
+            skiSpawner.IsSpawning = false;
+            StopRotating();
+            StartCoroutine(RestartTimer());
         }
-        
+    }
+
+    private void StopRotating()
+    {
+            obstacles = GameObject.FindGameObjectsWithTag("obstacle");
+            track.GetComponent<SkiTrackscript>().isRotating = false;
+            foreach (GameObject obstacle in obstacles)
+            {
+                SkiTrackscript skiTrackscript = obstacle.GetComponent<SkiTrackscript>();
+                if (skiTrackscript != null)
+                {
+                    skiTrackscript.isRotating = false;
+                    canTurn = false;
+                }
+            }
+    }
+    private IEnumerator Win()
+    {
+        yield return new WaitForSeconds(45);
+        skiSpawner.IsSpawning = false;
+        yield return new WaitForSeconds(7.5f);
+        if(!isDead)
+        {
+            canBeDead = false;
+            canTurn = false;
+            // skiSpawner.IsSpawning = false;
+            // StopRotating();
+            animator.SetInteger("Turn", 2);
+            Quaternion startRotation = transform.rotation;
+            Quaternion targetRotation = Quaternion.Euler(transform.eulerAngles.x, 240f, transform.eulerAngles.z);
+            animator.speed = 0.4f;
+            float duration = 1.05f;
+            float elapsedTime = 0f;
+            obstacles = GameObject.FindGameObjectsWithTag("obstacle");
+            while (elapsedTime < duration)
+            {
+                transform.rotation = Quaternion.Slerp(startRotation, targetRotation, elapsedTime / duration);
+                elapsedTime += Time.deltaTime;
+                foreach (GameObject obstacle in obstacles)
+                {
+                    try{
+                        SkiTrackscript skiTrackscript = obstacle.GetComponent<SkiTrackscript>();
+                        if (skiTrackscript != null)
+                        {
+                            skiTrackscript.rotationSpeed = Math.Max(skiTrackscript.rotationSpeed-0.08f,0);
+                        }
+                    }catch{}
+                }
+                track.GetComponent<SkiTrackscript>().rotationSpeed = Math.Max(track.GetComponent<SkiTrackscript>().rotationSpeed-0.08f,0);
+                yield return null;
+            }
+            StopRotating();
+            transform.rotation = targetRotation;
+            // yield return new WaitForSeconds(0.42f);
+            animator.speed = 0;
+            yield return new WaitForSeconds(0.5f);
+            WinScreen.SetActive(true);
+            yield return new WaitForSeconds(3f);
+            SceneManager.LoadScene("MainMenu");
+        }
+    }
+
+    private IEnumerator RestartTimer()
+    {
+        yield return new WaitForSeconds(0.5f);
+        DeathScreen.SetActive(true);
+        yield return new WaitForSeconds(2.5f);
+        SceneManager.LoadScene("Level_4(Snow)");
     }
 
     public void ResetTurn()

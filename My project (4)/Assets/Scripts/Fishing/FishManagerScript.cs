@@ -96,7 +96,8 @@ public class FishManagerScript : MonoBehaviour
                 SwitchFishLay();
                 fishMoved = true; break;
             case 3:
-                SceneManager.LoadScene("ShootingRange");
+                // SceneManager.LoadScene("ShootingRange");
+                StartCoroutine(StartNewScene());
                 journey = 0;
                 cielScript = FindObjectOfType<CielScript>();
                 startPosition = Fish3Fly.transform.position;
@@ -105,12 +106,11 @@ public class FishManagerScript : MonoBehaviour
                 {
                     journey += Time.deltaTime / 4;
                     Fish3Fly.transform.position = Vector3.Lerp(startPosition, targetPosition, journey);
-                    // if (cielScript != null)
-                    // {
-                    //     cielScript.stopThrow();
-                        
-                    //     Destroy(cielScript);
-                    // }
+                    if (cielScript != null)
+                    {
+                        cielScript.stopThrow();
+                        Destroy(cielScript);
+                    }
                     yield return null;
                 }
                 SceneManager.LoadScene(NextSceneName);
@@ -120,8 +120,10 @@ public class FishManagerScript : MonoBehaviour
         }
         yield return null;
     }
-    void Update()
+    private IEnumerator StartNewScene()
     {
-
+        yield return new WaitForSeconds(6.5f);
+        SceneManager.LoadScene("ShootingRange");
+        yield return null;
     }
 }
